@@ -1,0 +1,71 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<RunSettings>
+  <DataCollectionRunSettings>
+    <DataCollectors>
+      <DataCollector friendlyName="Code Coverage" uri="datacollector://Microsoft/CodeCoverage/2.0" assemblyQualifiedName="Microsoft.VisualStudio.Coverage.DynamicCoverageDataCollector, Microsoft.VisualStudio.TraceCollector, Version=11.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+        <Configuration>
+          <CodeCoverage>
+            <ModulePaths>
+              <Exclude>
+                <!--To exclude unnecessary .dlls-->
+                <ModulePath>.*\.tests\.dll$</ModulePath>
+                <ModulePath>.*\.Infrastructure$</ModulePath>
+                <ModulePath>.*\.FunctionApp$</ModulePath>
+                <ModulePath>.*\.Email$</ModulePath>
+                <ModulePath>.*\.Tests$</ModulePath>
+                <ModulePath>.*\.email\.dll$</ModulePath>
+                <ModulePath>.*\.data\.dll$</ModulePath>
+				        <ModulePath>.*\.jwt\.dll$</ModulePath>
+                <ModulePath>.*\.moq\.dll$</ModulePath>
+              </Exclude>
+            </ModulePaths>
+            <Sources>
+              <Exclude>
+                <!--To exclude unnecessary folders-->
+                <Source>.*\\Logging\\.*</Source>
+                <Source>.*\\Exceptions\\.*</Source>
+                <Source>.*\\Aspects\\.*</Source>
+                <Source>.*\\Models\\.*</Source>
+                <Source>.*\\Utilities\\.*</Source>
+                <Source>.*\\Enums\\.*</Source>
+                <Source>.*\\Options\\.*</Source>
+                <Source>.*\\Filters\\.*</Source>
+                <Source>.*\\Dictionaries\\.*</Source>
+				        <Source>.*\\Providers\\.*</Source>
+                <Source>.*\\Properties\\.*</Source>
+				        <Source>.*\\Messages\\.*</Source>
+				        <Source>.*\\Entities\\.*</Source>
+                <Source>.*\\Extensions\\.*</Source>
+                <Source>.*\\Helpers\\.*</Source>
+                <Source>.*\\ExternalServices\\.*</Source>
+                <Source>.*\\GlobalResources\\.*</Source>
+                <Source>.*\\Constants\\.*</Source>
+                <Source>.*\\Parsers\\.*</Source>
+                
+                <!--To exclude unnecessary files-->
+                <Source>.*Factory.cs</Source>
+                <Source>.*\\Program.cs</Source>
+                <Source>.*\\Startup.cs</Source>
+                <Source>.*\\FunctionAppTinService.cs</Source>
+				        <Source>.*\\OwinCommunicationListener.cs</Source>
+				        <Source>.*\\ServiceEventSource.cs</Source>
+                <Source>.*\\msvcr110.dll</Source>
+
+                <!--To exclude unnecessary libraries-->
+                <Source>.*\\msvcr110\\.*</Source>
+				        <Source>.*\\csharp-aes\\.*</Source>
+                <Source>.*\\sendgrid\\.*</Source>
+                <Source>.*\\moq\\.*</Source>
+              </Exclude>
+            </Sources>
+            <!-- We recommend you do not change the following values: -->
+            <UseVerifiableInstrumentation>True</UseVerifiableInstrumentation>
+            <AllowLowIntegrityProcesses>True</AllowLowIntegrityProcesses>
+            <CollectFromChildProcesses>True</CollectFromChildProcesses>
+            <CollectAspDotNet>False</CollectAspDotNet>
+          </CodeCoverage>
+        </Configuration>
+      </DataCollector>
+    </DataCollectors>
+  </DataCollectionRunSettings>
+</RunSettings>

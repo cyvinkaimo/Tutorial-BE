@@ -4,7 +4,7 @@
 # in your CD (release), pick projects to be deployed to intended Azure Resources
 
 trigger:
-- master
+- staging
 
 pool:
   vmImage: 'ubuntu-latest'

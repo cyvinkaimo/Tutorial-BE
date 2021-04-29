@@ -2,6 +2,6 @@
 {
     public class Errors
     {
-        public const string ModelState = "model-state";
+        public const string ModelState = "request-data";
     }
 }

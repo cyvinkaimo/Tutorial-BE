@@ -8,20 +8,20 @@
     using Yousource.Api.Extensions.Customer;
     using Yousource.Api.Filters;
     using Yousource.Api.Messages.Customers.Requests;
-    using Yousource.Infrastructure.Interfaces;
+    using Yousource.Infrastructure.Services;
 
     //// Use the Page Controllers or Experience Controllers convention wherein
     //// we create controllers per "pages/experience" and not in a RESTful manner
     [Route("api/create_customer")]
     public class CreateCustomerController : ControllerBase
     {
-        private readonly ICustomerService service;
+        private readonly ICustomerService customerService;
 
         //// Inject controller dependencies. Usually services
-        public CreateCustomerController(ICustomerService service)
+        public CreateCustomerController(ICustomerService customerService)
         {
-            Debug.Assert(service != null, "Null dependencies");
-            this.service = service;
+            Debug.Assert(customerService != null, "Null dependencies");
+            this.customerService = customerService;
         }
 
         [HttpPost]
@@ -33,7 +33,7 @@
         {
             //// Decouple models/request-response from Api and Service layer
             //// Create Extension `.AsRequest` to convert models.
-            var result = await this.service.CreateCustomerAsync(request.AsRequest());
+            var result = await this.customerService.CreateCustomerAsync(request.AsRequest());
             return this.CreateResponse(result.AsWebResponse());
         }
     }

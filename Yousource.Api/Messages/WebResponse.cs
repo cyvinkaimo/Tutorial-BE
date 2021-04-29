@@ -2,7 +2,7 @@
 {
     using System.Diagnostics.CodeAnalysis;
     using System.Net;
-    using System.Text.Json.Serialization;
+    using Newtonsoft.Json;
 
     [SuppressMessage("StyleCop.CSharp.MaintainabilityRules", "SA1402:FileMayOnlyContainASingleClass", Justification = "Reviewed.")]
     public class WebResponse<T> : WebResponse
@@ -12,7 +12,7 @@
             this.Data = data;
         }
 
-        [JsonPropertyName("data")]
+        [JsonProperty("data", NullValueHandling = NullValueHandling.Ignore)]
         public T Data { get; set; }
     }
 
@@ -25,10 +25,10 @@
             this.Message = string.Empty;
         }
 
-        [JsonPropertyName("message")]
+        [JsonProperty("message", NullValueHandling = NullValueHandling.Ignore)]
         public string Message { get; set; }
 
-        [JsonPropertyName("errorCode")]
+        [JsonProperty("errorCode", NullValueHandling = NullValueHandling.Ignore)]
         public string ErrorCode { get; set; }
 
         [JsonIgnore]

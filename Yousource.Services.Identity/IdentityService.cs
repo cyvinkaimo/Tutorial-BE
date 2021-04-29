@@ -7,27 +7,33 @@
     using System.Threading.Tasks;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.IdentityModel.Tokens;
+    using Yousource.Infrastructure.Constants;
+    using Yousource.Infrastructure.Entities.Identity;
     using Yousource.Infrastructure.Messages.Identity;
-    using Yousource.Services.Identity.Entities;
+    using Yousource.Infrastructure.Services;
+    using Yousource.Infrastructure.Settings;
     using Yousource.Services.Identity.Exceptions;
     using Yousource.Services.Identity.Extensions;
 
-    public class IdentityService
+    /// <summary>
+    /// Implemented using Microsoft AspNet Core Identity Framework
+    /// </summary>
+    public class IdentityService : IIdentityService
     {
         private readonly UserManager<User> userManager;
         private readonly SignInManager<User> signInManager;
-        private readonly string jwtSecret;
+        private readonly JwtSettings jwtSettings;
 
-        public IdentityService(UserManager<User> userManager, SignInManager<User> signInManager, string jwtSecret)
+        public IdentityService(UserManager<User> userManager, SignInManager<User> signInManager, JwtSettings jwtSecret)
         {
             this.userManager = userManager;
             this.signInManager = signInManager;
-            this.jwtSecret = jwtSecret;
+            this.jwtSettings = jwtSecret;
         }
 
-        public async Task<CreateUserResponse> CreateUserAsync(CreateUserRequest request)
+        public async Task<SignUpResponse> SignUpAsync(SignUpRequest request)
         {
-            var result = new CreateUserResponse();
+            var result = new SignUpResponse();
 
             try
             {
@@ -35,7 +41,6 @@
 
                 if (!identityResult.Succeeded)
                 {
-                    // Communicate error as part of the Response
                     return result;
                 }
 
@@ -62,11 +67,12 @@
 
             try
             {
-
                 var signInResult = await this.signInManager.PasswordSignInAsync(request.UserName, request.Password, false, false);
                 
                 if (!signInResult.Succeeded)
                 {
+                    // Communicate error as part of the Response
+                    result.SetError(IdentityServiceErrorCodes.InvalidCredential);
                     return result;
                 }
 
@@ -75,11 +81,11 @@
                 var claims = await this.userManager.GetClaimsAsync(user);
 
                 var tokenHandler = new JwtSecurityTokenHandler();
-                var key = Encoding.ASCII.GetBytes(this.jwtSecret);
+                var key = Encoding.ASCII.GetBytes(this.jwtSettings.Secret);
                 var tokenDescriptor = new SecurityTokenDescriptor
                 {
                     Subject = new ClaimsIdentity(claims),
-                    Expires = DateTime.UtcNow.AddMinutes(request.ExpiresInMinutes),
+                    Expires = DateTime.UtcNow.AddMinutes(this.jwtSettings.ExpiresInMinutes),
                     SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
                 };
                 var token = tokenHandler.CreateToken(tokenDescriptor);

@@ -1,11 +1,11 @@
 ﻿namespace Yousource.Services.Identity.Extensions
 {
     using Yousource.Infrastructure.Messages.Identity;
-    using Yousource.Services.Identity.Entities;
+    using Yousource.Infrastructure.Entities.Identity;
 
     public static class UserExtensions
     {
-        public static User AsUser(this CreateUserRequest request)
+        public static User AsUser(this SignUpRequest request)
         {
             var result = new User
             {

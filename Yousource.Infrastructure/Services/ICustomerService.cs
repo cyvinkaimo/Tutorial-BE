@@ -1,4 +1,4 @@
-﻿namespace Yousource.Infrastructure.Interfaces
+﻿namespace Yousource.Infrastructure.Services
 {
     using System.Threading.Tasks;
     using Yousource.Infrastructure.Messages.Customers.Requests;

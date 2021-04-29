@@ -7,20 +7,20 @@
     using Yousource.Api.Extensions;
     using Yousource.Api.Extensions.Customer;
     using Yousource.Api.Filters;
-    using Yousource.Infrastructure.Interfaces;
+    using Yousource.Infrastructure.Services;
 
     //// Use the Page Controllers or Experience Controllers convention wherein
     //// we create controllers per "pages/experience" and not in a RESTful manner
     [Route("api/customers")]
     public class CustomersController : ControllerBase
     {
-        private readonly ICustomerService service;
+        private readonly ICustomerService customerService;
 
         //// Inject controller dependencies. Usually services
-        public CustomersController(ICustomerService service)
+        public CustomersController(ICustomerService customerService)
         {
-            Debug.Assert(service != null, "Null dependencies");
-            this.service = service;
+            Debug.Assert(customerService != null, "Null dependencies");
+            this.customerService = customerService;
         }
 
         [HttpGet]
@@ -30,7 +30,7 @@
         //// Controller code should only contain two lines i.e. invocation of service
         public async Task<IActionResult> GetCustomersAsync()
         {
-            var result = await this.service.GetCustomersAsync();
+            var result = await this.customerService.GetCustomersAsync();
             return this.CreateResponse(result.AsWebResponse());
         }
     }

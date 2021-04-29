@@ -2,7 +2,7 @@
 {
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
-    using Yousource.Infrastructure.Interfaces;
+    using Yousource.Infrastructure.Services;
     using Yousource.Services.Customer;
     using Yousource.Services.Customer.Data;
 

@@ -4,10 +4,10 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
-    using Yousource.Infrastructure.Interfaces;
     using Yousource.Infrastructure.Logging;
     using Yousource.Infrastructure.Messages.Customers.Requests;
     using Yousource.Infrastructure.Messages.Customers.Responses;
+    using Yousource.Infrastructure.Services;
     using Yousource.Services.Customer.Constants;
     using Yousource.Services.Customer.Data;
     using Yousource.Services.Customer.Exceptions;

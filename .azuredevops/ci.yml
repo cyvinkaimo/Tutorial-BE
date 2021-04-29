@@ -16,9 +16,18 @@ steps:
 - task: DotNetCoreCLI@2
   inputs:
     command: 'publish'
-    publishWebProjects: true
+    publishWebProjects: false
+    projects: '**/Litchi.Book.Api/Litchi.Book.Api.csproj'
     arguments: '--configuration $(BuildConfiguration) --output $(build.artifactstagingdirectory)'
-  displayName: 'Publish Projects'
+  displayName: 'Publish Book Projects'
+
+- task: DotNetCoreCLI@2
+  inputs:
+    command: 'publish'
+    publishWebProjects: false
+    projects: '**/Litchi.BookAdmin.Api/Litchi.BookAdmin.Api.csproj'
+    arguments: '--configuration $(BuildConfiguration) --output $(build.artifactstagingdirectory)'
+  displayName: 'Publish Book Admin Projects'
 
 - task: PublishBuildArtifacts@1
   inputs:

@@ -1,11 +1,22 @@
 namespace Yousource.Api
 {
+    using System;
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;
+    using Microsoft.AspNetCore.Identity;
+    using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Hosting;
     using Yousource.Api.Extensions.Injection;
+    using Yousource.Services.Identity.Data;
+    using Yousource.Infrastructure.Entities.Identity;
+    using System.Text;
+    using Microsoft.AspNetCore.Authentication.JwtBearer;
+    using Microsoft.IdentityModel.Tokens;
+    using Yousource.Infrastructure.Settings;
+    using Yousource.Infrastructure.Services;
+    using Yousource.Services.Identity;
 
     public class Startup
     {
@@ -18,6 +29,44 @@ namespace Yousource.Api
 
         public void ConfigureServices(IServiceCollection services)
         {
+            #region Configure AspNet Identity
+            services.AddDbContext<ApplicationDbContext>(options =>
+                options.UseSqlServer(
+                    this.Configuration.GetSection("Database")["ConnectionString"]));
+
+            services.AddIdentity<User, Role>()
+                .AddEntityFrameworkStores<ApplicationDbContext>()
+                .AddDefaultTokenProviders();
+
+            services.Configure<IdentityOptions>(options =>
+            {
+                // Configure custom Identity Options here such as Password Rules, Sign In Rules, and etc.
+            });
+
+            var jwtConfig = this.Configuration.GetSection("Jwt");
+            var key = Encoding.ASCII.GetBytes(jwtConfig["Secret"]);
+            services.AddAuthentication(x =>
+            {
+                x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            })
+            .AddJwtBearer(x =>
+            {
+                x.RequireHttpsMetadata = false;
+                x.SaveToken = true;
+                x.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuerSigningKey = true,
+                    IssuerSigningKey = new SymmetricSecurityKey(key),
+                    ValidateIssuer = false,
+                    ValidateAudience = false
+                };
+            });
+
+            services.AddSingleton(new JwtSettings(jwtConfig["Secret"]));
+            services.AddTransient<IIdentityService, IdentityService>();
+            #endregion
+
             //// Through Extension Methods, call Service Injections here.
             services.InjectAttributes();
             services.InjectInfrastructure(this.Configuration);
@@ -56,6 +105,7 @@ namespace Yousource.Api
                 .AllowAnyHeader());
             app.UseHttpsRedirection();
             app.UseAuthentication();
+            app.UseAuthorization();
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();

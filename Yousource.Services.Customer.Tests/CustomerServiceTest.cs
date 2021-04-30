@@ -1,7 +1,11 @@
 namespace Yousource.Services.Customer.Tests
 {
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Threading.Tasks;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
     using Moq;
+    using Yousource.Infrastructure.Entities.Customers;
     using Yousource.Infrastructure.Logging;
     using Yousource.Services.Customer.Data;
 
@@ -29,6 +33,20 @@ namespace Yousource.Services.Customer.Tests
             this.gateway = null;
 
             this.target = null;
+        }
+
+        [TestMethod]
+        public async Task GetCustomersAsync_GatewayReturnedData_ResponseHasNoError()
+        {
+            // Arrange
+            var expected = new List<Customer> { new Customer() };
+            this.gateway.Setup(g => g.GetCustomersAsync()).ReturnsAsync(expected);
+
+            // Act
+            var actual = await this.target.GetCustomersAsync();
+
+            // Assert
+            Assert.AreEqual(expected.Count, actual.Data.Count());
         }
     }
 }

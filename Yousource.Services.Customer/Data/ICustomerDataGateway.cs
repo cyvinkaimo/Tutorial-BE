@@ -2,12 +2,12 @@
 {
     using System.Collections.Generic;
     using System.Threading.Tasks;
-    using Yousource.Services.Customer.Data.Entities;
+    using Yousource.Infrastructure.Entities.Customers;
 
     public interface ICustomerDataGateway
     {
-        Task InsertCustomerAsync(CustomerEntity customer);
+        Task InsertCustomerAsync(Customer customer);
 
-        Task<IEnumerable<CustomerEntity>> GetCustomersAsync();
+        Task<IEnumerable<Customer>> GetCustomersAsync();
     }
 }

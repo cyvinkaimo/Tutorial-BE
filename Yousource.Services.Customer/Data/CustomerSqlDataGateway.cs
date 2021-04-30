@@ -4,9 +4,9 @@
     using System.Data.Common;
     using System.Linq;
     using System.Threading.Tasks;
+    using Yousource.Infrastructure.Entities.Customers;
     using Yousource.Infrastructure.Helpers;
     using Yousource.Infrastructure.Logging;
-    using Yousource.Services.Customer.Data.Entities;
     using Yousource.Services.Customer.Exceptions;
 
     //// Data access class
@@ -28,14 +28,14 @@
             this.factory = factory;
         }
 
-        public async Task<IEnumerable<CustomerEntity>> GetCustomersAsync()
+        public async Task<IEnumerable<Customer>> GetCustomersAsync()
         {
-            var result = Enumerable.Empty<CustomerEntity>();
+            var result = Enumerable.Empty<Customer>();
 
             try
             {
                 var command = this.factory.CreateGetCustomersCommand();
-                result = await this.sql.ReadAsListAsync<CustomerEntity>(command);
+                result = await this.sql.ReadAsListAsync<Customer>(command);
             }
             catch (DbException ex)
             {
@@ -47,7 +47,7 @@
             return result;
         }
 
-        public async Task InsertCustomerAsync(CustomerEntity customer)
+        public async Task InsertCustomerAsync(Customer customer)
         {
             try
             {

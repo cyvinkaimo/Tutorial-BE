@@ -1,11 +1,11 @@
 ﻿namespace Yousource.Services.Customer.Data
 {
     using System.Data.SqlClient;
-    using Yousource.Services.Customer.Data.Entities;
+    using Yousource.Infrastructure.Entities.Customers;
 
     public interface ICustomerSqlCommandFactory
     {
-        SqlCommand CreateInsertCustomerCommand(CustomerEntity customer);
+        SqlCommand CreateInsertCustomerCommand(Customer customer);
 
         SqlCommand CreateGetCustomersCommand();
     }

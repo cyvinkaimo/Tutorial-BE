@@ -1,8 +1,8 @@
-﻿namespace Yousource.Services.Customer.Data.Entities
+﻿namespace Yousource.Infrastructure.Entities.Customers
 {
     using System;
 
-    public class CustomerEntity
+    public class Customer
     {
         public Guid Id { get; set; }
 

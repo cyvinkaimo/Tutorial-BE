@@ -2,7 +2,7 @@
 {
     using System.Data;
     using System.Data.SqlClient;
-    using Yousource.Services.Customer.Data.Entities;
+    using Yousource.Infrastructure.Entities.Customers;
 
     public class CustomerSqlCommandFactory : ICustomerSqlCommandFactory
     {
@@ -17,7 +17,7 @@
             return result;
         }
 
-        public SqlCommand CreateInsertCustomerCommand(CustomerEntity customer)
+        public SqlCommand CreateInsertCustomerCommand(Customer customer)
         {
             var result = new SqlCommand("[dbo].[sp_InsertCustomer]")
             {

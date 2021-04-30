@@ -2,15 +2,15 @@
 {
     using System.Collections.Generic;
     using System.Linq;
+    using Yousource.Infrastructure.Entities.Customers;
     using Yousource.Infrastructure.Messages.Customers.Requests;
     using Yousource.Infrastructure.Models.Customers;
-    using Yousource.Services.Customer.Data.Entities;
 
     public static class CustomerExtensions
     {
-        public static CustomerEntity AsEntity(this CreateCustomerRequest request)
+        public static Infrastructure.Entities.Customers.Customer AsEntity(this CreateCustomerRequest request)
         {
-            var result = new CustomerEntity
+            var result = new Infrastructure.Entities.Customers.Customer
             {
                 Email = request.Email,
                 Name = request.Name
@@ -20,15 +20,15 @@
             return result;
         }
 
-        public static IEnumerable<Customer> AsModel(this IEnumerable<CustomerEntity> entities)
+        public static IEnumerable<Infrastructure.Models.Customers.Customer> AsModel(this IEnumerable<Infrastructure.Entities.Customers.Customer> entities)
         {
             var result = entities.Select(entity => entity.AsModel());
             return result;
         }
 
-        public static Customer AsModel(this CustomerEntity entity)
+        public static Infrastructure.Models.Customers.Customer AsModel(this Infrastructure.Entities.Customers.Customer entity)
         {
-            var result = new Customer
+            var result = new Infrastructure.Models.Customers.Customer
             {
                 Email = entity.Email,
                 Name = entity.Name

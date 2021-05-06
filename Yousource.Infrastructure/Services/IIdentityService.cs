@@ -8,5 +8,7 @@
         Task<SignUpResponse> SignUpAsync(SignUpRequest request);
 
         Task<SignInResponse> SignInAsync(SignInRequest request);
+
+        Task<AddToRoleResponse> AddToRoleAsync(AddToRoleRequest request);
     }
 }

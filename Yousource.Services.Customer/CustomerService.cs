@@ -32,7 +32,7 @@
         public async Task<CreateCustomerResponse> CreateCustomerAsync(CreateCustomerRequest request)
         {
             var result = new CreateCustomerResponse();
-            var errors = Enumerable.Empty<string>() as ICollection<string>;
+            var errors = new List<string>() as ICollection<string>;
 
             try
             {

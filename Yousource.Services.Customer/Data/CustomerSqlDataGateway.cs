@@ -30,7 +30,7 @@
 
         public async Task<IEnumerable<Customer>> GetCustomersAsync()
         {
-            var result = Enumerable.Empty<Customer>();
+            var result = new List<Customer>();
 
             try
             {

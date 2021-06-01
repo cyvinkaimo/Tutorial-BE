@@ -1,5 +1,6 @@
 namespace Yousource.Services.Customer.Tests
 {
+    using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
@@ -8,6 +9,7 @@ namespace Yousource.Services.Customer.Tests
     using Yousource.Infrastructure.Entities.Customers;
     using Yousource.Infrastructure.Logging;
     using Yousource.Services.Customer.Data;
+    using Yousource.Services.Customer.Exceptions;
 
     [TestClass]
     public class CustomerServiceTest
@@ -36,10 +38,10 @@ namespace Yousource.Services.Customer.Tests
         }
 
         [TestMethod]
-        public async Task GetCustomersAsync_GatewayReturnedData_ResponseHasNoError()
+        public async Task GetCustomersAsync_GatewayReturnedData_ActualDataIsEqualToExpected()
         {
             // Arrange
-            var expected = new List<Customer> { new Customer() };
+            var expected = new List<Customer> { new Customer { Name = "Test" } };
             this.gateway.Setup(g => g.GetCustomersAsync()).ReturnsAsync(expected);
 
             // Act
@@ -47,6 +49,31 @@ namespace Yousource.Services.Customer.Tests
 
             // Assert
             Assert.AreEqual(expected.Count, actual.Data.Count());
+        }
+
+        [TestMethod]
+        public async Task GetCustomersAsync_ExceptionWasThrown_LoggerWriteExceptionWasCalled()
+        {
+            // Arrange
+            this.logger.Setup(l => l.WriteException(It.IsAny<Exception>())).Verifiable();
+            this.gateway.Setup(g => g.GetCustomersAsync()).ThrowsAsync(new Exception());
+
+            // Act - since the actual code throws an exception, make sure to catch that so that the assertion will proceed as expected
+            try { var actual = await this.target.GetCustomersAsync(); } catch { }
+
+            // Assert
+            this.logger.Verify(l => l.WriteException(It.IsAny<Exception>()));
+        }
+
+        [TestMethod, ExpectedException(typeof(CustomerServiceException))]
+        public async Task GetCustomersAsync_ExceptionWasThrown_CustomerServiceExceptionWasRethrown()
+        {
+            // Arrange
+            this.logger.Setup(l => l.WriteException(It.IsAny<Exception>())).Verifiable();
+            this.gateway.Setup(g => g.GetCustomersAsync()).ThrowsAsync(new Exception());
+
+            // Act
+            var actual = await this.target.GetCustomersAsync();
         }
     }
 }

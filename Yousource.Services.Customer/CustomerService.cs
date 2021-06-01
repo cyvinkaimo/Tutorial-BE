@@ -63,6 +63,7 @@
         public async Task<GetCustomersResponse> GetCustomersAsync()
         {
             var result = new GetCustomersResponse();
+
             try
             {
                 //// Convert Entity (Service) model to Shared (Infra) model using `AsModel` extension

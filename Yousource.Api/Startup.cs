@@ -1,6 +1,7 @@
 namespace Yousource.Api
 {
-    using System;
+    using System.Text;
+    using Microsoft.AspNetCore.Authentication.JwtBearer;
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.AspNetCore.Identity;
@@ -8,15 +9,13 @@ namespace Yousource.Api
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Hosting;
-    using Yousource.Api.Extensions.Injection;
-    using Yousource.Services.Identity.Data;
-    using Yousource.Infrastructure.Entities.Identity;
-    using System.Text;
-    using Microsoft.AspNetCore.Authentication.JwtBearer;
     using Microsoft.IdentityModel.Tokens;
-    using Yousource.Infrastructure.Settings;
+    using Yousource.Api.Extensions.Injection;
+    using Yousource.Infrastructure.Entities.Identity;
     using Yousource.Infrastructure.Services;
+    using Yousource.Infrastructure.Settings;
     using Yousource.Services.Identity;
+    using Yousource.Services.Identity.Data;
 
     public class Startup
     {
@@ -29,7 +28,6 @@ namespace Yousource.Api
 
         public void ConfigureServices(IServiceCollection services)
         {
-            #region Configure AspNet Identity
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(
                     this.Configuration.GetSection("Database")["ConnectionString"]));
@@ -65,7 +63,6 @@ namespace Yousource.Api
 
             services.AddSingleton(new JwtSettings(jwtConfig["Secret"]));
             services.AddTransient<IIdentityService, IdentityService>();
-            #endregion
 
             //// Through Extension Methods, call Service Injections here.
             services.InjectAttributes();

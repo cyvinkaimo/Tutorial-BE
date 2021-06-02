@@ -2,9 +2,7 @@
 {
     using System.Collections.Generic;
     using System.Linq;
-    using Yousource.Infrastructure.Entities.Customers;
     using Yousource.Infrastructure.Messages.Customers.Requests;
-    using Yousource.Infrastructure.Models.Customers;
 
     public static class CustomerExtensions
     {

@@ -49,7 +49,8 @@
 
                 // Assign Initial Claims from Sign Up
                 var createdUser = await this.userManager.FindByNameAsync(request.UserName);
-                var claims = new Claim[] {
+                var claims = new Claim[] 
+                {
                     new Claim(ClaimTypes.NameIdentifier, createdUser.Id.ToString()),
                     new Claim(ClaimTypes.Name, createdUser.UserName)
                 };

@@ -13,20 +13,6 @@
     [TestClass]
     public class CustomerSqlCommandFactoryTest
     {
-        private CustomerSqlCommandFactory target;
-
-        [TestInitialize]
-        public void Setup()
-        {
-            this.target = new CustomerSqlCommandFactory();
-        }
-
-        [TestCleanup]
-        public void Teardown()
-        {
-            this.target = null;
-        }
-
         [TestMethod]
         public void CreateGetCustomersCommand_AnyScenario_CorrectCommandText()
         {
@@ -34,7 +20,7 @@
             var expected = "[dbo].[sp_GetCustomers]";
 
             // Act - execute the actual method that is being tested
-            var actual = this.target.CreateGetCustomersCommand();
+            var actual = CustomerSqlCommandFactory.CreateGetCustomersCommand();
 
             // Assert
             Assert.AreEqual(expected, actual);

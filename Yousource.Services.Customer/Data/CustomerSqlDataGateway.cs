@@ -14,18 +14,15 @@
     {
         private readonly ISqlHelper sql;
         private readonly ILogger logger;
-        private readonly ICustomerSqlCommandFactory factory;
 
         //// Inject necessary data access adapter like `ISqlHelper` and `ILogger`
         //// Inject command factory; Separates the creation of commands with parameters to be executed
         public CustomerSqlDataGateway(
             ISqlHelper helper, 
-            ILogger logger,
-            ICustomerSqlCommandFactory factory)
+            ILogger logger)
         {
             this.sql = helper;
             this.logger = logger;
-            this.factory = factory;
         }
 
         public async Task<IEnumerable<Customer>> GetCustomersAsync()
@@ -34,7 +31,7 @@
 
             try
             {
-                var command = this.factory.CreateGetCustomersCommand();
+                var command = CustomerSqlCommandFactory.CreateGetCustomersCommand();
                 result = await this.sql.ReadAsListAsync<Customer>(command);
             }
             catch (DbException ex)
@@ -51,7 +48,7 @@
         {
             try
             {
-                var command = this.factory.CreateInsertCustomerCommand(customer);
+                var command = CustomerSqlCommandFactory.CreateInsertCustomerCommand(customer);
                 await this.sql.ExecuteAsync(command);
             }
             catch (DbException ex)

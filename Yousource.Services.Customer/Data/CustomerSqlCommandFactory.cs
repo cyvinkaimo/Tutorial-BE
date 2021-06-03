@@ -4,9 +4,13 @@
     using System.Data.SqlClient;
     using Yousource.Infrastructure.Entities.Customers;
 
-    public class CustomerSqlCommandFactory : ICustomerSqlCommandFactory
+    /// <summary>
+    /// The SqlCommandFactory helpers separate creation of SqlCommand from the Data Gateway for a shorter, one-line look.
+    /// This is an MS SQL-only specific helper class and will not apply to other technologies like Cosmos, Mongo, Postgres and etc
+    /// </summary>
+    public static class CustomerSqlCommandFactory
     {
-        public SqlCommand CreateGetCustomersCommand()
+        public static SqlCommand CreateGetCustomersCommand()
         {
             var result = new SqlCommand("[dbo].[sp_GetCustomers]")
             {
@@ -17,7 +21,7 @@
             return result;
         }
 
-        public SqlCommand CreateInsertCustomerCommand(Customer customer)
+        public static SqlCommand CreateInsertCustomerCommand(Customer customer)
         {
             var result = new SqlCommand("[dbo].[sp_InsertCustomer]")
             {

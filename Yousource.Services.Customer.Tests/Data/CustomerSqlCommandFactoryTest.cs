@@ -23,7 +23,7 @@
             var actual = CustomerSqlCommandFactory.CreateGetCustomersCommand();
 
             // Assert
-            Assert.AreEqual(expected, actual);
+            Assert.AreEqual(expected, actual.CommandText);
         }
     }
 }

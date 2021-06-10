@@ -30,4 +30,4 @@ jobs:
     inputs:
       command: test
       projects: $(BuildParameters.TestProjects)
-      arguments: --configuration $(BuildConfiguration)
+      arguments: --configuration $(BuildConfiguration) --collect "Code Coverage" --settings "Solution Items/CodeCoverage.runSettings"

@@ -11,7 +11,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Api", "Api", "{05C52B8F-0E0
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Customer", "Customer", "{951DC299-BD2F-429D-AC6F-7E25D2F8ED3B}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{57303CBC-C6FF-462E-8E40-D1E25FC219D0}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SolutionItems", "SolutionItems", "{57303CBC-C6FF-462E-8E40-D1E25FC219D0}"
 	ProjectSection(SolutionItems) = preProject
 		_Solution Items\Unit Test Metrics\CodeCoverage.runsettings = _Solution Items\Unit Test Metrics\CodeCoverage.runsettings
 	EndProjectSection
@@ -28,7 +28,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Yousource.Services.Customer
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Identity", "Identity", "{ED6649DB-F9BF-4DF4-8FF0-76224CFE83C8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Yousource.Services.Identity", "Yousource.Services.Identity\Yousource.Services.Identity.csproj", "{4E6C2350-F15F-405B-9AA0-C7F56996FFF3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Yousource.Services.Identity", "Yousource.Services.Identity\Yousource.Services.Identity.csproj", "{4E6C2350-F15F-405B-9AA0-C7F56996FFF3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

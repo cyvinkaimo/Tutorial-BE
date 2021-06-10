@@ -43,10 +43,8 @@
                 <Source>.*\\Parsers\\.*</Source>
                 
                 <!--To exclude unnecessary files-->
-                <Source>.*Factory.cs</Source>
                 <Source>.*\\Program.cs</Source>
                 <Source>.*\\Startup.cs</Source>
-                <Source>.*\\FunctionAppTinService.cs</Source>
 				        <Source>.*\\OwinCommunicationListener.cs</Source>
 				        <Source>.*\\ServiceEventSource.cs</Source>
                 <Source>.*\\msvcr110.dll</Source>

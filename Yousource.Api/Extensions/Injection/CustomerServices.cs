@@ -11,7 +11,6 @@
         public static void InjectCustomerService(this IServiceCollection services, IConfiguration configuration)
         {
             services.AddSingleton<ICustomerService, CustomerService>();
-            services.AddSingleton<ICustomerSqlCommandFactory, CustomerSqlCommandFactory>();
             services.AddSingleton<ICustomerDataGateway, CustomerSqlDataGateway>();
         }
     }

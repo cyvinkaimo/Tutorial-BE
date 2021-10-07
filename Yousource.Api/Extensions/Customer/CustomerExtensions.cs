@@ -11,7 +11,7 @@
 
     public static class CustomerExtensions
     {
-        public static CreateCustomerRequest AsRequest(this AddCustomerWebRequest request)
+        public static CreateCustomerRequest AsRequest(this CreateCustomerWebRequest request)
         {
             var result = new CreateCustomerRequest
             {

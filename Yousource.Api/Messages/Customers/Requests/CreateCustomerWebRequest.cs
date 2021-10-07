@@ -3,7 +3,7 @@
     using System.ComponentModel.DataAnnotations;
     using Newtonsoft.Json;
 
-    public class AddCustomerWebRequest : WebRequest
+    public class CreateCustomerWebRequest : WebRequest
     {
         [JsonProperty("name")]
         [Required]

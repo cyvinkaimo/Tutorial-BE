@@ -10,9 +10,12 @@
     using Yousource.Api.Messages.Customers.Requests;
     using Yousource.Infrastructure.Services;
 
-    //// Use the Page Controllers or Experience Controllers convention wherein
-    //// we create controllers per "pages/experience" and not in a RESTful manner
+    /// <summary>
+    /// Represent each Frontend Page as a Controller for one-to-one modeling/structuring
+    /// </summary>
     [Route("api/create_customer")]
+    [TypeFilter(typeof(ValidateModelStateAttribute))]
+    [TypeFilter(typeof(LogExceptionAttribute))]
     public class CreateCustomerController : ControllerBase
     {
         private readonly ICustomerService customerService;
@@ -26,10 +29,8 @@
 
         [HttpPost]
         [AllowAnonymous]
-        [ServiceFilter(typeof(ValidateModelStateAttribute))]
-        [ServiceFilter(typeof(LogExceptionAttribute))]
         //// Controller code should only contain two lines i.e. invocation of service
-        public async Task<IActionResult> AddCustomerAsync([FromBody] AddCustomerWebRequest request)
+        public async Task<IActionResult> CreateCustomerAsync([FromBody] CreateCustomerWebRequest request)
         {
             //// Decouple models/request-response from Api and Service layer
             //// Create Extension `.AsRequest` to convert models.

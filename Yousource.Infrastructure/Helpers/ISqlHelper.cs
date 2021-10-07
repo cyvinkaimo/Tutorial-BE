@@ -4,6 +4,9 @@
     using System.Data.SqlClient;
     using System.Threading.Tasks;
 
+    /// <summary>
+    /// A wrapper interface for testability
+    /// </summary>
     public interface ISqlHelper
     {
         Task ExecuteAsync(SqlCommand command);

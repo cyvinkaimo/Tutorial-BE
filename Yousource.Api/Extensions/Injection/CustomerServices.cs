@@ -10,8 +10,8 @@
     {
         public static void InjectCustomerService(this IServiceCollection services, IConfiguration configuration)
         {
-            services.AddSingleton<ICustomerService, CustomerService>();
-            services.AddSingleton<ICustomerDataGateway, CustomerSqlDataGateway>();
+            services.AddScoped<ICustomerService, CustomerService>();
+            services.AddScoped<ICustomerDataGateway, CustomerSqlDataGateway>();
         }
     }
 }

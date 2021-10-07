@@ -24,10 +24,10 @@
                         .Select(a => a.ErrorMessage)
                         .ToList()),
                     ErrorCode = Errors.ModelState,
-                    StatusCode = (int)System.Net.HttpStatusCode.UnprocessableEntity
+                    StatusCode = (int)System.Net.HttpStatusCode.BadRequest
                 };
 
-                context.Result = new UnprocessableEntityObjectResult(response);
+                context.Result = new BadRequestObjectResult(response);
             }
         }
     }

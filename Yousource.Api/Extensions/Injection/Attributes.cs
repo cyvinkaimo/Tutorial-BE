@@ -7,8 +7,8 @@
     {
         public static void InjectAttributes(this IServiceCollection services)
         {
-            services.AddSingleton<ValidateModelStateAttribute>();
-            services.AddSingleton<LogExceptionAttribute>();
+            services.AddScoped<ValidateModelStateAttribute>();
+            services.AddScoped<LogExceptionAttribute>();
         }
     }
 }

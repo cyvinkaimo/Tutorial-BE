@@ -25,7 +25,6 @@
                 <Source>.*\\Logging\\.*</Source>
                 <Source>.*\\Exceptions\\.*</Source>
                 <Source>.*\\Aspects\\.*</Source>
-                <Source>.*\\Models\\.*</Source>
                 <Source>.*\\Utilities\\.*</Source>
                 <Source>.*\\Enums\\.*</Source>
                 <Source>.*\\Options\\.*</Source>
@@ -34,7 +33,6 @@
 				        <Source>.*\\Providers\\.*</Source>
                 <Source>.*\\Properties\\.*</Source>
 				        <Source>.*\\Messages\\.*</Source>
-				        <Source>.*\\Entities\\.*</Source>
                 <Source>.*\\Extensions\\.*</Source>
                 <Source>.*\\Helpers\\.*</Source>
                 <Source>.*\\ExternalServices\\.*</Source>

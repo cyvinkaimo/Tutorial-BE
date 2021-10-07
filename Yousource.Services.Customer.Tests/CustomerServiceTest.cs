@@ -37,6 +37,8 @@ namespace Yousource.Services.Customer.Tests
             this.target = null;
         }
 
+        //// The naming convention for a test method is: "Method_Scenario_Expectation"
+        //// In this test method, we are expecting a happy path wherein the scenario is the data gateway returned the data as expected
         [TestMethod]
         public async Task GetCustomersAsync_GatewayReturnedData_ActualDataIsEqualToExpected()
         {
@@ -52,6 +54,7 @@ namespace Yousource.Services.Customer.Tests
         }
 
         [TestMethod]
+        //// In this test method, we stubbed the data gateway to throw an exception so that we can test that the logger was called as expected
         public async Task GetCustomersAsync_ExceptionWasThrown_LoggerWriteExceptionWasCalled()
         {
             // Arrange
@@ -66,6 +69,7 @@ namespace Yousource.Services.Customer.Tests
         }
 
         [TestMethod, ExpectedException(typeof(CustomerServiceException))]
+        //// In this test method, we stubbed the data gateway to throw an exception so that we can test that the exception was rethrown as layer-type exception
         public async Task GetCustomersAsync_ExceptionWasThrown_CustomerServiceExceptionWasRethrown()
         {
             // Arrange

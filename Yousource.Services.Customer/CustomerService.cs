@@ -2,14 +2,13 @@
 {
     using System;
     using System.Collections.Generic;
-    using System.Linq;
     using System.Threading.Tasks;
+    using Yousource.Infrastructure.Data;
     using Yousource.Infrastructure.Logging;
     using Yousource.Infrastructure.Messages.Customers.Requests;
     using Yousource.Infrastructure.Messages.Customers.Responses;
     using Yousource.Infrastructure.Services;
     using Yousource.Services.Customer.Constants;
-    using Yousource.Services.Customer.Data;
     using Yousource.Services.Customer.Exceptions;
     using Yousource.Services.Customer.Extensions;
     using Yousource.Services.Customer.Specifications;

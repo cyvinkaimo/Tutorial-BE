@@ -1,4 +1,4 @@
-﻿namespace Yousource.Services.Customer.Data
+﻿namespace Yousource.Infrastructure.Data
 {
     using System.Collections.Generic;
     using System.Threading.Tasks;

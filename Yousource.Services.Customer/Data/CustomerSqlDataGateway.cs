@@ -2,8 +2,8 @@
 {
     using System.Collections.Generic;
     using System.Data.Common;
-    using System.Linq;
     using System.Threading.Tasks;
+    using Yousource.Infrastructure.Data;
     using Yousource.Infrastructure.Entities.Customers;
     using Yousource.Infrastructure.Helpers;
     using Yousource.Infrastructure.Logging;

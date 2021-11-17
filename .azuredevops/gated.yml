@@ -1,33 +1,31 @@
 trigger:
-  branches:
-    include:
-    -
+  - none
 variables:
-- name: BuildParameters.RestoreBuildProjects
-  value: '**/*.csproj'
-- name: BuildParameters.TestProjects
-  value: '**/*[Tt]ests/*.csproj'
-- name: BuildConfiguration
-  value: Release
+  - name: BuildParameters.RestoreBuildProjects
+    value: "**/*.csproj"
+  - name: BuildParameters.TestProjects
+    value: "**/*[Tt]ests/*.csproj"
+  - name: BuildConfiguration
+    value: Release
 
 name: $(date:yyyyMMdd)$(rev:.r)
 jobs:
-- job: Job_1
-  displayName: Agent job 1
-  pool:
-    vmImage: vs2017-win2016
-  steps:
-  - checkout: self
-  - task: StyleCop@3
-    displayName: 'StyleCop Runner '
-  - task: DotNetCoreCLI@2
-    displayName: Build
-    inputs:
-      projects: $(BuildParameters.RestoreBuildProjects)
-      arguments: --configuration $(BuildConfiguration)
-  - task: DotNetCoreCLI@2
-    displayName: Test
-    inputs:
-      command: test
-      projects: $(BuildParameters.TestProjects)
-      arguments: --configuration $(BuildConfiguration) --collect "Code Coverage" --settings SolutionItems/CodeCoverage.runSettings
+  - job: Job_1
+    displayName: Agent job 1
+    pool:
+      vmImage: vs2017-win2016
+    steps:
+      - checkout: self
+      - task: StyleCop@3
+        displayName: "StyleCop Runner "
+      - task: DotNetCoreCLI@2
+        displayName: Build
+        inputs:
+          projects: $(BuildParameters.RestoreBuildProjects)
+          arguments: --configuration $(BuildConfiguration)
+      - task: DotNetCoreCLI@2
+        displayName: Test
+        inputs:
+          command: test
+          projects: $(BuildParameters.TestProjects)
+          arguments: --configuration $(BuildConfiguration) --collect "Code Coverage" --settings SolutionItems/CodeCoverage.runSettings

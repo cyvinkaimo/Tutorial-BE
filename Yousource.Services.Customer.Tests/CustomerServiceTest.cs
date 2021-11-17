@@ -6,9 +6,9 @@ namespace Yousource.Services.Customer.Tests
     using System.Threading.Tasks;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
     using Moq;
+    using Yousource.Infrastructure.Data;
     using Yousource.Infrastructure.Entities.Customers;
     using Yousource.Infrastructure.Logging;
-    using Yousource.Services.Customer.Data;
     using Yousource.Services.Customer.Exceptions;
 
     [TestClass]

@@ -1,42 +1,45 @@
 ﻿namespace Yousource.Api.Controllers
 {
-    using System.Diagnostics;
-    using System.Threading.Tasks;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
     using Yousource.Api.Extensions;
-    using Yousource.Api.Extensions.Identity;
     using Yousource.Api.Filters;
     using Yousource.Api.Messages.Identity;
-    using Yousource.Infrastructure.Services;
+    using Yousource.Infrastructure.Enums.Identity;
+    using Yousource.Infrastructure.Services.Interfaces;
 
     [Route("api/login")]
     [TypeFilter(typeof(LogExceptionAttribute))]
     [TypeFilter(typeof(ValidateModelStateAttribute))]
+    [AllowAnonymous]
     public class LoginController : ControllerBase
     {
         private readonly IIdentityService identityService;
 
         public LoginController(IIdentityService identityService)
         {
-            Debug.Assert(identityService != null, "Null dependencies");
             this.identityService = identityService;
         }
 
-        [HttpPost]
-        [AllowAnonymous]
-        public async Task<IActionResult> SignInAsync([FromBody] SignInWebRequest request)
+        [HttpPost("external")]
+        public async Task<IActionResult> SignInExternalAsync([FromBody] SignInExternalWebRequest request)
         {
-            var result = await this.identityService.SignInAsync(request.AsRequest());
-            return this.CreateResponse(result.AsWebResponse());
+            var result = await identityService.SignInExternalAsync(request.AsRequest(Role.Employer));
+            return this.CreateResponse(result.AsSignInExternalWebResponse());
         }
 
-        [HttpPost("sign_up")]
-        [AllowAnonymous]
+        [HttpPost]
+        public async Task<IActionResult> SignInAsync([FromBody] SignInWebRequest request)
+        {
+            var result = await identityService.SignInAsync(request.AsRequest());
+            return this.CreateResponse(result.AsSignInWebResponse());
+        }
+
+        [HttpPost("sign-up")]
         public async Task<IActionResult> SignUpAsync([FromBody] SignUpWebRequest request)
         {
-            var result = await this.identityService.SignUpAsync(request.AsRequest());
-            return this.CreateResponse(result.AsWebResponse());
+            var result = await identityService.SignUpAsync(request.AsRequest(Role.Employer));
+            return this.CreateResponse(result.AsSignUpWebResponse());
         }
     }
 }

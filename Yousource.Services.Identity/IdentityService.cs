@@ -1,78 +1,110 @@
 ﻿namespace Yousource.Services.Identity
 {
     using System;
-    using System.Collections.Generic;
-    using System.IdentityModel.Tokens.Jwt;
     using System.Security.Claims;
-    using System.Text;
     using System.Threading.Tasks;
     using Microsoft.AspNetCore.Identity;
-    using Microsoft.IdentityModel.Tokens;
-    using Yousource.Infrastructure.Constants;
+    using Yousource.Infrastructure.Constants.Errors;
     using Yousource.Infrastructure.Entities.Identity;
+    using Yousource.Infrastructure.Exceptions;
+    using Yousource.Infrastructure.Extensions;
+    using Yousource.Infrastructure.Logging;
+    using Yousource.Infrastructure.Messages;
     using Yousource.Infrastructure.Messages.Identity;
-    using Yousource.Infrastructure.Services;
-    using Yousource.Infrastructure.Settings;
-    using Yousource.Services.Identity.Exceptions;
+    using Yousource.Infrastructure.Services.Interfaces;
     using Yousource.Services.Identity.Extensions;
+    using Yousource.Services.Identity.Helpers;
+    using Yousource.Services.Identity.Validators;
+    using Yousource.Services.Identity.Workflows;
+    using Yousource.Services.Identity.Workflows.SignInExternal;
 
-    /// <summary>
-    /// Implemented using Microsoft AspNet Core Identity Framework
-    /// </summary>
     public class IdentityService : IIdentityService
     {
         private readonly UserManager<User> userManager;
         private readonly SignInManager<User> signInManager;
         private readonly RoleManager<Role> roleManager;
-        private readonly JwtSettings jwtSettings;
+        private readonly JwtHelper jwtHelper;
+        private readonly IdentityServiceValidators validators;
+        private readonly ILogger logger;
+        private readonly IdentityServiceWorkflows workflows;
 
-        public IdentityService(UserManager<User> userManager, SignInManager<User> signInManager, RoleManager<Role> roleManager, JwtSettings jwtSettings)
+        public IdentityService(
+            UserManager<User> userManager,
+            SignInManager<User> signInManager,
+            RoleManager<Role> roleManager,
+            JwtHelper jwtHelper,
+            IdentityServiceValidators validators,
+            ILogger logger,
+            IdentityServiceWorkflows workflows)
         {
             this.userManager = userManager;
             this.signInManager = signInManager;
             this.roleManager = roleManager;
-            this.jwtSettings = jwtSettings;
+            this.jwtHelper = jwtHelper;
+            this.validators = validators;
+            this.logger = logger;
+            this.workflows = workflows;
         }
 
-        public async Task<SignUpResponse> SignUpAsync(SignUpRequest request)
+        public async Task<Response> SignUpAsync(SignUpRequest request)
         {
-            var result = new SignUpResponse();
+            var result = new Response();
 
             try
             {
-                var identityResult = await this.userManager.CreateAsync(request.AsUser(), request.Password);
+                var validationResult = validators.SignUpValidator.Validate(request);
+
+                if (!validationResult.IsValid)
+                {
+                    result.SetError(IdentityServiceErrorCodes.ValidationError, validationResult.ToString(" "));
+                    return result;
+                }
+
+                var identityResult = await userManager.CreateAsync(request.AsUser(), request.Password);
 
                 if (!identityResult.Succeeded)
                 {
+                    identityResult.HandleIdentityResultError(ref result);
                     return result;
                 }
 
                 // Assign Initial Claims from Sign Up
-                var createdUser = await this.userManager.FindByNameAsync(request.UserName);
-                var claims = new Claim[] 
+                var createdUser = await userManager.FindByNameAsync(request.UserName);
+                var claims = new Claim[]
                 {
                     new Claim(ClaimTypes.NameIdentifier, createdUser.Id.ToString()),
                     new Claim(ClaimTypes.Name, createdUser.UserName)
                 };
 
-                await this.userManager.AddClaimsAsync(createdUser, claims);
+                await userManager.AddClaimsAsync(createdUser, claims);
+                await AddToRoleAsync(new AddToRoleRequest { UserId = createdUser.Id.ToString(), Role = request.DefaultRole.ToString() });
+                logger.TrackEvent("Sign Up Success", createdUser.CreateLogProperties());
             }
             catch (Exception ex)
             {
-                throw new IdentityException(ex);
+                logger.WriteException(ex);
+                throw new IdentityServiceException(ex);
             }
 
             return result;
         }
 
-        public async Task<SignInResponse> SignInAsync(SignInRequest request)
+        public async Task<Response<string>> SignInAsync(SignInRequest request)
         {
-            var result = new SignInResponse();
+            var result = new Response<string>();
 
             try
             {
-                var signInResult = await this.signInManager.PasswordSignInAsync(request.UserName, request.Password, false, false);
-                
+                var validationResult = validators.SignInValidator.Validate(request);
+
+                if (!validationResult.IsValid)
+                {
+                    result.SetError(IdentityServiceErrorCodes.UnexpectedError, validationResult.ToString(" "));
+                    return result;
+                }
+
+                var signInResult = await signInManager.PasswordSignInAsync(request.UserName, request.Password, false, false);
+
                 if (!signInResult.Succeeded)
                 {
                     // Communicate error as part of the Response
@@ -81,69 +113,59 @@
                 }
 
                 // Generate the JWT Access Token
-                var user = await this.userManager.FindByNameAsync(request.UserName);
-                var claims = await this.userManager.GetClaimsAsync(user);
-
-                var tokenHandler = new JwtSecurityTokenHandler();
-                var key = Encoding.ASCII.GetBytes(this.jwtSettings.Secret);
-                var tokenDescriptor = new SecurityTokenDescriptor
-                {
-                    Subject = new ClaimsIdentity(claims),
-                    Expires = DateTime.UtcNow.AddMinutes(this.jwtSettings.ExpiresInMinutes),
-                    SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
-                };
-                var token = tokenHandler.CreateToken(tokenDescriptor);
-                result.AccessToken = tokenHandler.WriteToken(token);
-                result.Expires = tokenDescriptor.Expires;
+                var user = await userManager.FindByNameAsync(request.UserName);
+                var claims = await userManager.GetClaimsAsync(user);
+                result.Data = jwtHelper.GenerateToken(claims);
+                logger.TrackEvent("Sign In", user.CreateLogProperties());
             }
             catch (Exception ex)
             {
-                throw new IdentityException(ex);
+                logger.WriteException(ex);
+                throw new IdentityServiceException(ex);
             }
 
             return result;
         }
 
-        public async Task<AddToRoleResponse> AddToRoleAsync(AddToRoleRequest request)
+        public async Task<Response<string>> SignInExternalAsync(SignInExternalRequest request)
         {
-            var result = new AddToRoleResponse();
+            var result = new Response<string>();
 
             try
             {
-                var user = await this.userManager.FindByIdAsync(request.UserId);
+                var payload = jwtHelper.ValidateToken(request.IdToken, request.Provider);
 
-                if (user == null)
+                if (payload == null)
                 {
-                    result.SetError(IdentityServiceErrorCodes.UserNotFound);
+                    result.SetError(IdentityServiceErrorCodes.GoogleTokenValidationError);
                     return result;
                 }
 
-                Claim claim;
-                IEnumerable<Claim> claims;
-                Role role;
+                var workflowRequest = new SignInExternalWorkflowRequest(request, result);
+                result = await workflows.CreateSignInExternalWorkflow().ExecuteAsync(workflowRequest);
 
-                // Create the role if it doesn't exist
-                if (!await this.roleManager.RoleExistsAsync(request.Role))
-                {
-                    role = new Role { Id = Guid.NewGuid(), Name = request.Role };
-                    await this.roleManager.CreateAsync(role);
-                    claim = new Claim(ClaimTypes.Role, request.Role);
-                    await this.roleManager.AddClaimAsync(role, claim);
-                    claims = new Claim[] { claim };
-                }
-                else
-                {
-                    role = await this.roleManager.FindByNameAsync(request.Role);
-                    claims = await this.roleManager.GetClaimsAsync(role);
-                }
-
-                // Acknowledge the new role assigned to the user and add it to their claims
-                await this.userManager.AddToRoleAsync(user, request.Role);
-                await this.userManager.AddClaimsAsync(user, claims);
+                logger.TrackEvent("Sign In External", workflowRequest.User.CreateLogProperties());
             }
             catch (Exception ex)
             {
-                throw new IdentityException(ex);
+                logger.WriteException(ex);
+                throw new IdentityServiceException(ex);
+            }
+
+            return result;
+        }
+
+        public async Task<Response> AddToRoleAsync(AddToRoleRequest request)
+        {
+            var result = new Response();
+
+            try
+            {
+                result = await roleManager.AddToRoleAsync(userManager, request);
+            }
+            catch (Exception ex)
+            {
+                throw new IdentityServiceException(ex);
             }
 
             return result;

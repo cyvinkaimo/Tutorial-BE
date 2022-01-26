@@ -9,7 +9,7 @@ trigger:
 - master
 
 pool:
-  vmImage: 'ubuntu-latest'
+  vmImage: 'windows-2022'
 
 variables:
   buildConfiguration: 'Release'
@@ -19,9 +19,9 @@ steps:
   inputs:
     command: 'publish'
     publishWebProjects: false
-    projects: '**/Yousource.Api/Yousource.Api.csproj'
+    projects: '**/*.Yousource/*.Yousource.csproj'
     arguments: '--configuration $(BuildConfiguration) --output $(build.artifactstagingdirectory)'
-  displayName: 'Publish Book Projects'
+  displayName: 'Publish Yousource API'
 
 - task: PublishBuildArtifacts@1
   inputs:

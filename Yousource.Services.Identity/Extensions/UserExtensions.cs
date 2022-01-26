@@ -9,10 +9,8 @@
         {
             var result = new User
             {
-                //// The UserName can also be an Email. If that's the case, then also assign the Email Field below
                 UserName = request.UserName,
-                //// Email = request.UserName
-                //// Map Other Fields
+                Email = request.UserName
             };
 
             return result;

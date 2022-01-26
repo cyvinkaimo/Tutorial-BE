@@ -1,15 +1,21 @@
 ﻿namespace Yousource.Api.Messages
 {
+    using System.Collections.Generic;
     using System.Diagnostics.CodeAnalysis;
     using System.Net;
     using Newtonsoft.Json;
+    using Yousource.Api.Constants;
 
     [SuppressMessage("StyleCop.CSharp.MaintainabilityRules", "SA1402:FileMayOnlyContainASingleClass", Justification = "Reviewed.")]
     public class WebResponse<T> : WebResponse
     {
         public WebResponse(T data)
         {
-            this.Data = data;
+            Data = data;
+        }
+
+        public WebResponse()
+        {
         }
 
         [JsonProperty("data", NullValueHandling = NullValueHandling.Ignore)]
@@ -21,17 +27,20 @@
     {
         public WebResponse()
         {
-            this.StatusCode = (int)HttpStatusCode.OK;
-            this.Message = string.Empty;
+            Message = string.Empty;
         }
 
         [JsonProperty("message", NullValueHandling = NullValueHandling.Ignore)]
         public string Message { get; set; }
 
         [JsonProperty("errorCode", NullValueHandling = NullValueHandling.Ignore)]
-        public string ErrorCode { get; set; }
+        public string ErrorCode { get; set; } = string.Empty;
 
         [JsonIgnore]
-        public int StatusCode { get; set; }
+        public virtual Dictionary<string, HttpStatusCode> StatusCodeMap => new Dictionary<string, HttpStatusCode>
+        {
+            { string.Empty, HttpStatusCode.OK },
+            { Errors.ModelState, HttpStatusCode.UnprocessableEntity },
+        };
     }
 }

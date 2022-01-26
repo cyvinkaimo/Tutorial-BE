@@ -6,7 +6,7 @@ namespace Yousource.Services.Customer.Tests
     using System.Threading.Tasks;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
     using Moq;
-    using Yousource.Infrastructure.Data;
+    using Yousource.Infrastructure.Data.Interfaces;
     using Yousource.Infrastructure.Entities.Customers;
     using Yousource.Infrastructure.Logging;
     using Yousource.Services.Customer.Exceptions;
@@ -58,14 +58,14 @@ namespace Yousource.Services.Customer.Tests
         public async Task GetCustomersAsync_ExceptionWasThrown_LoggerWriteExceptionWasCalled()
         {
             // Arrange
-            this.logger.Setup(l => l.WriteException(It.IsAny<Exception>())).Verifiable();
+            this.logger.Setup(l => l.WriteException(It.IsAny<Exception>(), It.IsAny<IDictionary<string, string>>())).Verifiable();
             this.gateway.Setup(g => g.GetCustomersAsync()).ThrowsAsync(new Exception());
 
             // Act - since the actual code throws an exception, make sure to catch that so that the assertion will proceed as expected
             try { var actual = await this.target.GetCustomersAsync(); } catch { }
 
             // Assert
-            this.logger.Verify(l => l.WriteException(It.IsAny<Exception>()));
+            this.logger.Verify(l => l.WriteException(It.IsAny<Exception>(), It.IsAny<IDictionary<string, string>>()));
         }
 
         [TestMethod, ExpectedException(typeof(CustomerServiceException))]
@@ -73,7 +73,7 @@ namespace Yousource.Services.Customer.Tests
         public async Task GetCustomersAsync_ExceptionWasThrown_CustomerServiceExceptionWasRethrown()
         {
             // Arrange
-            this.logger.Setup(l => l.WriteException(It.IsAny<Exception>())).Verifiable();
+            this.logger.Setup(l => l.WriteException(It.IsAny<Exception>(), It.IsAny<IDictionary<string, string>>())).Verifiable();
             this.gateway.Setup(g => g.GetCustomersAsync()).ThrowsAsync(new Exception());
 
             // Act

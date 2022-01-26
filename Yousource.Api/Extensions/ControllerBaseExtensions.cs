@@ -3,15 +3,15 @@
     using System;
     using System.Security.Claims;
     using Microsoft.AspNetCore.Mvc;
+    using Yousource.Api.Models.Users;
     using Yousource.Api.Messages;
-    using Yousource.Api.Models.User;
 
     public static class ControllerBaseExtensions
     {
         public static IActionResult CreateResponse<T>(this ControllerBase controller, T value) where T : WebResponse
         {
             var result = default(IActionResult);
-            result = controller.StatusCode(value.StatusCode, value);
+            result = controller.StatusCode((int)value.StatusCodeMap[value.ErrorCode], value);
             return result;
         }
 

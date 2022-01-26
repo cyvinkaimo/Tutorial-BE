@@ -1,29 +1,33 @@
 ﻿namespace Yousource.Infrastructure.Messages
 {
     using System.Collections.Generic;
+    using System.Diagnostics.CodeAnalysis;
     using System.Net;
     using System.Runtime.Serialization;
 
-    public abstract class Response
+    [SuppressMessage("StyleCop.CSharp.MaintainabilityRules", "SA1402:FileMayOnlyContainASingleClass", Justification = "Reviewed.")]
+    public class Response<T> : Response
+    {
+        public Response(T data)
+        {
+            Data = data;
+        }
+
+        public Response()
+        {
+        }
+
+        [DataMember]
+        public T Data { get; set; }
+    }
+
+    [SuppressMessage("StyleCop.CSharp.MaintainabilityRules", "SA1402:FileMayOnlyContainASingleClass", Justification = "Reviewed.")]
+    public class Response
     {
         public Response()
         {
-            this.ErrorCode = string.Empty;
-            this.Message = string.Empty;
-        }
-
-        public virtual Dictionary<string, int> StatusCodeMap => new Dictionary<string, int>
-        {
-            { string.Empty, (int)HttpStatusCode.OK }
-        };
-
-        [DataMember]
-        public int StatusCode
-        {
-            get
-            {
-                return this.StatusCodeMap[this.ErrorCode];
-            }
+            ErrorCode = string.Empty;
+            Message = string.Empty;
         }
 
         [DataMember]
@@ -35,14 +39,14 @@
         #region Set Error Methods
         public void SetError(string errorCode, string error = "")
         {
-            this.ErrorCode = errorCode;
-            this.Message = error;
+            ErrorCode = errorCode;
+            Message = error;
         }
 
         public void SetError(string errorCode, ICollection<string> errors)
         {
-            this.ErrorCode = errorCode;
-            this.Message = string.Join(". ", errors);
+            ErrorCode = errorCode;
+            Message = string.Join(". ", errors);
         }
         #endregion
     }

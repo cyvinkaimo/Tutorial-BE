@@ -1,6 +1,7 @@
 ﻿namespace Yousource.Infrastructure.Logging
 {
     using System;
+    using System.Collections.Generic;
     using Microsoft.ApplicationInsights;
     using Microsoft.ApplicationInsights.Extensibility;
 
@@ -10,12 +11,17 @@
 
         public InsightsLogger(string instrumentationKey)
         {
-            this.client = new TelemetryClient(new TelemetryConfiguration(instrumentationKey));
+            client = new TelemetryClient(new TelemetryConfiguration(instrumentationKey));
         }
 
-        public void WriteException(Exception e)
+        public void TrackEvent(string eventName, IDictionary<string, string> properties = null)
         {
-            this.client.TrackException(e);
+            client.TrackEvent(eventName, properties);
+        }
+
+        public void WriteException(Exception e, IDictionary<string, string> properties = null)
+        {
+            client.TrackException(e, properties);
         }
     }
 }

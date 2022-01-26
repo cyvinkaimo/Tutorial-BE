@@ -19,7 +19,7 @@ steps:
   inputs:
     command: 'publish'
     publishWebProjects: false
-    projects: '**/*.Yousource/*.Yousource.csproj'
+    projects: '**/*.Yousource/*.Yousource.Api.csproj'
     arguments: '--configuration $(BuildConfiguration) --output $(build.artifactstagingdirectory)'
   displayName: 'Publish Yousource API'
 

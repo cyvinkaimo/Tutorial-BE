@@ -10,7 +10,7 @@
     {
         public Response(T data)
         {
-            Data = data;
+            this.Data = data;
         }
 
         public Response()
@@ -26,8 +26,8 @@
     {
         public Response()
         {
-            ErrorCode = string.Empty;
-            Message = string.Empty;
+            this.ErrorCode = string.Empty;
+            this.Message = string.Empty;
         }
 
         [DataMember]
@@ -39,14 +39,14 @@
         #region Set Error Methods
         public void SetError(string errorCode, string error = "")
         {
-            ErrorCode = errorCode;
-            Message = error;
+            this.ErrorCode = errorCode;
+            this.Message = error;
         }
 
         public void SetError(string errorCode, ICollection<string> errors)
         {
-            ErrorCode = errorCode;
-            Message = string.Join(". ", errors);
+            this.ErrorCode = errorCode;
+            this.Message = string.Join(". ", errors);
         }
         #endregion
     }

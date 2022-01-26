@@ -25,9 +25,9 @@
 
         public virtual AsyncStep<SignInExternalWorkflowRequest, Response<string>> CreateSignInExternalWorkflow()
         {
-            var result = new ValidateExternalTokenStep(jwtHelper);
-            result.SetNextStep(new TrySignInExternalStep(userManager, jwtHelper));
-            result.SetNextStep(new SignUpExternalStep(userManager, roleManager, jwtHelper));
+            var result = new ValidateExternalTokenStep(this.jwtHelper);
+            result.SetNextStep(new TrySignInExternalStep(this.userManager, this.jwtHelper));
+            result.SetNextStep(new SignUpExternalStep(this.userManager, this.roleManager, this.jwtHelper));
             return result;
         }
     }

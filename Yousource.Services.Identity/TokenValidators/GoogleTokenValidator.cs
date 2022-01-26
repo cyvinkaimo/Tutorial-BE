@@ -17,7 +17,7 @@
         {
             var settings = new GoogleJsonWebSignature.ValidationSettings()
             {
-                Audience = new List<string>() { clientId }
+                Audience = new List<string>() { this.clientId }
             };
 
             var payload = GoogleJsonWebSignature.ValidateAsync(idToken, settings).Result;

@@ -17,7 +17,7 @@
         public override void OnException(ExceptionContext context)
         {
             var innermost = context.Exception.GetInnermostException();
-            logger.WriteException(context.Exception);
+            this.logger.WriteException(context.Exception);
             context.Result = new StatusCodeResult(500);
         }
     }

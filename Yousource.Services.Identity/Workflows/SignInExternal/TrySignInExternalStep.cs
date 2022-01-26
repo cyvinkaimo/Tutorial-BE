@@ -24,15 +24,15 @@
             var info = new UserLoginInfo(request.Request.Provider, request.Payload.Subject, request.Request.Provider);
             request.UserLoginInfo = info;
 
-            var user = await userManager.FindByLoginAsync(info.LoginProvider, info.ProviderKey);
+            var user = await this.userManager.FindByLoginAsync(info.LoginProvider, info.ProviderKey);
 
             if (user == null)
             {
-                return await ExecuteNextAsync(request);
+                return await this.ExecuteNextAsync(request);
             }
 
             request.User = user;
-            request.Response.Data = await userManager.GenerateJwtAsync(jwtHelper, user);
+            request.Response.Data = await this.userManager.GenerateJwtAsync(this.jwtHelper, user);
             return request.Response;
         }
     }

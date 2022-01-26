@@ -3,8 +3,8 @@
     using System;
     using System.Security.Claims;
     using Microsoft.AspNetCore.Mvc;
-    using Yousource.Api.Models.Users;
     using Yousource.Api.Messages;
+    using Yousource.Api.Models.Users;
 
     public static class ControllerBaseExtensions
     {

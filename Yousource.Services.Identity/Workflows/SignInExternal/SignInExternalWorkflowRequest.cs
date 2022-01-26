@@ -12,8 +12,8 @@
             SignInExternalRequest request,
             Response<string> response)
         {
-            Request = request;
-            Response = response;
+            this.Request = request;
+            this.Response = response;
         }
 
         public SignInExternalRequest Request { get; private set; }

@@ -11,17 +11,17 @@
 
         public InsightsLogger(string instrumentationKey)
         {
-            client = new TelemetryClient(new TelemetryConfiguration(instrumentationKey));
+            this.client = new TelemetryClient(new TelemetryConfiguration(instrumentationKey));
         }
 
         public void TrackEvent(string eventName, IDictionary<string, string> properties = null)
         {
-            client.TrackEvent(eventName, properties);
+            this.client.TrackEvent(eventName, properties);
         }
 
         public void WriteException(Exception e, IDictionary<string, string> properties = null)
         {
-            client.TrackException(e, properties);
+            this.client.TrackException(e, properties);
         }
     }
 }

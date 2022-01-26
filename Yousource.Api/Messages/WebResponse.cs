@@ -11,7 +11,7 @@
     {
         public WebResponse(T data)
         {
-            Data = data;
+            this.Data = data;
         }
 
         public WebResponse()
@@ -27,7 +27,7 @@
     {
         public WebResponse()
         {
-            Message = string.Empty;
+            this.Message = string.Empty;
         }
 
         [JsonProperty("message", NullValueHandling = NullValueHandling.Ignore)]

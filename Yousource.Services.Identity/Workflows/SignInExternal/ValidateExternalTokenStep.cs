@@ -17,7 +17,7 @@
 
         public override async Task<Response<string>> ExecuteAsync(SignInExternalWorkflowRequest request)
         {
-            var payload = jwtHelper.ValidateToken(request.Request.IdToken, request.Request.Provider);
+            var payload = this.jwtHelper.ValidateToken(request.Request.IdToken, request.Request.Provider);
 
             if (payload == null)
             {
@@ -26,7 +26,7 @@
             }
 
             request.Payload = payload;
-            return await ExecuteNextAsync(request);
+            return await this.ExecuteNextAsync(request);
         }
     }
 }

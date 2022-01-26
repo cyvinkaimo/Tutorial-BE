@@ -52,7 +52,7 @@
 
             try
             {
-                var validationResult = validators.SignUpValidator.Validate(request);
+                var validationResult = this.validators.SignUpValidator.Validate(request);
 
                 if (!validationResult.IsValid)
                 {
@@ -60,7 +60,7 @@
                     return result;
                 }
 
-                var identityResult = await userManager.CreateAsync(request.AsUser(), request.Password);
+                var identityResult = await this.userManager.CreateAsync(request.AsUser(), request.Password);
 
                 if (!identityResult.Succeeded)
                 {
@@ -69,20 +69,20 @@
                 }
 
                 // Assign Initial Claims from Sign Up
-                var createdUser = await userManager.FindByNameAsync(request.UserName);
+                var createdUser = await this.userManager.FindByNameAsync(request.UserName);
                 var claims = new Claim[]
                 {
                     new Claim(ClaimTypes.NameIdentifier, createdUser.Id.ToString()),
                     new Claim(ClaimTypes.Name, createdUser.UserName)
                 };
 
-                await userManager.AddClaimsAsync(createdUser, claims);
-                await AddToRoleAsync(new AddToRoleRequest { UserId = createdUser.Id.ToString(), Role = request.DefaultRole.ToString() });
-                logger.TrackEvent("Sign Up Success", createdUser.CreateLogProperties());
+                await this.userManager.AddClaimsAsync(createdUser, claims);
+                await this.AddToRoleAsync(new AddToRoleRequest { UserId = createdUser.Id.ToString(), Role = request.DefaultRole.ToString() });
+                this.logger.TrackEvent("Sign Up Success", createdUser.CreateLogProperties());
             }
             catch (Exception ex)
             {
-                logger.WriteException(ex);
+                this.logger.WriteException(ex);
                 throw new IdentityServiceException(ex);
             }
 
@@ -95,7 +95,7 @@
 
             try
             {
-                var validationResult = validators.SignInValidator.Validate(request);
+                var validationResult = this.validators.SignInValidator.Validate(request);
 
                 if (!validationResult.IsValid)
                 {
@@ -103,7 +103,7 @@
                     return result;
                 }
 
-                var signInResult = await signInManager.PasswordSignInAsync(request.UserName, request.Password, false, false);
+                var signInResult = await this.signInManager.PasswordSignInAsync(request.UserName, request.Password, false, false);
 
                 if (!signInResult.Succeeded)
                 {
@@ -113,14 +113,14 @@
                 }
 
                 // Generate the JWT Access Token
-                var user = await userManager.FindByNameAsync(request.UserName);
-                var claims = await userManager.GetClaimsAsync(user);
-                result.Data = jwtHelper.GenerateToken(claims);
-                logger.TrackEvent("Sign In", user.CreateLogProperties());
+                var user = await this.userManager.FindByNameAsync(request.UserName);
+                var claims = await this.userManager.GetClaimsAsync(user);
+                result.Data = this.jwtHelper.GenerateToken(claims);
+                this.logger.TrackEvent("Sign In", user.CreateLogProperties());
             }
             catch (Exception ex)
             {
-                logger.WriteException(ex);
+                this.logger.WriteException(ex);
                 throw new IdentityServiceException(ex);
             }
 
@@ -133,7 +133,7 @@
 
             try
             {
-                var payload = jwtHelper.ValidateToken(request.IdToken, request.Provider);
+                var payload = this.jwtHelper.ValidateToken(request.IdToken, request.Provider);
 
                 if (payload == null)
                 {
@@ -142,13 +142,13 @@
                 }
 
                 var workflowRequest = new SignInExternalWorkflowRequest(request, result);
-                result = await workflows.CreateSignInExternalWorkflow().ExecuteAsync(workflowRequest);
+                result = await this.workflows.CreateSignInExternalWorkflow().ExecuteAsync(workflowRequest);
 
-                logger.TrackEvent("Sign In External", workflowRequest.User.CreateLogProperties());
+                this.logger.TrackEvent("Sign In External", workflowRequest.User.CreateLogProperties());
             }
             catch (Exception ex)
             {
-                logger.WriteException(ex);
+                this.logger.WriteException(ex);
                 throw new IdentityServiceException(ex);
             }
 
@@ -161,7 +161,7 @@
 
             try
             {
-                result = await roleManager.AddToRoleAsync(userManager, request);
+                result = await this.roleManager.AddToRoleAsync(this.userManager, request);
             }
             catch (Exception ex)
             {

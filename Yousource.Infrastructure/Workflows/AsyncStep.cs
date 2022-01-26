@@ -10,9 +10,9 @@
 
         public virtual Task<TResponse> ExecuteNextAsync(TRequest request)
         {
-            if (next != null)
+            if (this.next != null)
             {
-                return next.ExecuteAsync(request);
+                return this.next.ExecuteAsync(request);
             }
 
             return null;
@@ -20,13 +20,13 @@
 
         public void SetNextStep(AsyncStep<TRequest, TResponse> step)
         {
-            if (next != null)
+            if (this.next != null)
             {
-                next.SetNextStep(step);
+                this.next.SetNextStep(step);
             }
             else
             {
-                next = step;
+                this.next = step;
             }
         }
     }

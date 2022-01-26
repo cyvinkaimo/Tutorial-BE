@@ -1,9 +1,9 @@
 ﻿namespace Yousource.Api.Extensions
 {
+    using Yousource.Api.Messages.Identity;
     using Yousource.Infrastructure.Enums.Identity;
     using Yousource.Infrastructure.Messages;
     using Yousource.Infrastructure.Messages.Identity;
-    using Yousource.Api.Messages.Identity;
 
     public static class LoginExtensions
     {

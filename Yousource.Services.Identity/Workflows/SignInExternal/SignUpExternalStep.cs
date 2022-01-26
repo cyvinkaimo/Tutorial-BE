@@ -2,13 +2,13 @@
 {
     using System.Threading.Tasks;
     using Microsoft.AspNetCore.Identity;
+    using Yousource.Infrastructure.Constants.Errors;
     using Yousource.Infrastructure.Entities.Identity;
-    using Yousource.Infrastructure.Messages.Identity;
     using Yousource.Infrastructure.Messages;
+    using Yousource.Infrastructure.Messages.Identity;
     using Yousource.Infrastructure.Workflows;
     using Yousource.Services.Identity.Extensions;
     using Yousource.Services.Identity.Helpers;
-    using Yousource.Infrastructure.Constants.Errors;
 
     internal class SignUpExternalStep : AsyncStep<SignInExternalWorkflowRequest, Response<string>>
     {
@@ -25,20 +25,20 @@
 
         public override async Task<Response<string>> ExecuteAsync(SignInExternalWorkflowRequest request)
         {
-            var user = await userManager.FindByEmailAsync(request.Payload.Email);
+            var user = await this.userManager.FindByEmailAsync(request.Payload.Email);
 
             if (user == null)
             {
                 user = new User { Email = request.Payload.Email, UserName = request.Payload.Email };
-                await userManager.CreateAsync(user);
-                await userManager.AddLoginAsync(user, request.UserLoginInfo);
+                await this.userManager.CreateAsync(user);
+                await this.userManager.AddLoginAsync(user, request.UserLoginInfo);
 
                 var defaultClaims = request.Payload.AsClaims(user.Id.ToString());
-                await userManager.AddClaimsAsync(user, defaultClaims);
-                await roleManager.AddToRoleAsync(userManager, new AddToRoleRequest { UserId = user.Id.ToString(), Role = request.Request.DefaultRole.ToString() });
+                await this.userManager.AddClaimsAsync(user, defaultClaims);
+                await this.roleManager.AddToRoleAsync(this.userManager, new AddToRoleRequest { UserId = user.Id.ToString(), Role = request.Request.DefaultRole.ToString() });
 
                 request.User = user;
-                request.Response.Data = await userManager.GenerateJwtAsync(jwtHelper, user);
+                request.Response.Data = await this.userManager.GenerateJwtAsync(this.jwtHelper, user);
                 return request.Response;
             }
             else

@@ -2,8 +2,8 @@
 {
     using System.Collections.Generic;
     using System.Net;
-    using Yousource.Infrastructure.Constants.Errors;
     using Yousource.Api.Messages;
+    using Yousource.Infrastructure.Constants.Errors;
 
     public class SignInExternalWebResponse : WebResponse<string>
     {

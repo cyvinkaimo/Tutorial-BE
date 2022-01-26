@@ -1,12 +1,7 @@
 ﻿namespace Yousource.Api.Extensions
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
-    using System.Threading.Tasks;
-    using Yousource.Infrastructure.Messages;
     using Yousource.Api.Messages;
+    using Yousource.Infrastructure.Messages;
 
     public static class ResponseExtensions
     {

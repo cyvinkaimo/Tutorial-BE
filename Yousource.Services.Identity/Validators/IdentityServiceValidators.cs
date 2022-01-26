@@ -9,8 +9,8 @@
             IValidator<SignUpRequest> signUpValidator,
             IValidator<SignInRequest> signInValidator)
         {
-            SignUpValidator = signUpValidator;
-            SignInValidator = signInValidator;
+            this.SignUpValidator = signUpValidator;
+            this.SignInValidator = signInValidator;
         }
 
         public IValidator<SignUpRequest> SignUpValidator { get; private set; }

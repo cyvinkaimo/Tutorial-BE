@@ -28,18 +28,18 @@
         public virtual TokenPayload ValidateToken(string idToken, string provider)
         {
             // Create strategy context (use provider to toggle)
-            var validator = new GoogleTokenValidator(clientId);
+            var validator = new GoogleTokenValidator(this.clientId);
             return validator.ValidateToken(idToken);
         }
 
         public virtual string GenerateToken(IEnumerable<Claim> claims)
         {
             var tokenHandler = new JwtSecurityTokenHandler();
-            var key = Encoding.ASCII.GetBytes(settings.Secret);
+            var key = Encoding.ASCII.GetBytes(this.settings.Secret);
             var tokenDescriptor = new SecurityTokenDescriptor
             {
                 Subject = new ClaimsIdentity(claims),
-                Expires = DateTime.UtcNow.AddMinutes(settings.ExpiresInMinutes),
+                Expires = DateTime.UtcNow.AddMinutes(this.settings.ExpiresInMinutes),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
             };
             var token = tokenHandler.CreateToken(tokenDescriptor);

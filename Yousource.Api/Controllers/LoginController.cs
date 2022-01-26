@@ -24,21 +24,21 @@
         [HttpPost("external")]
         public async Task<IActionResult> SignInExternalAsync([FromBody] SignInExternalWebRequest request)
         {
-            var result = await identityService.SignInExternalAsync(request.AsRequest(Role.Employer));
+            var result = await this.identityService.SignInExternalAsync(request.AsRequest(Role.Employer));
             return this.CreateResponse(result.AsSignInExternalWebResponse());
         }
 
         [HttpPost]
         public async Task<IActionResult> SignInAsync([FromBody] SignInWebRequest request)
         {
-            var result = await identityService.SignInAsync(request.AsRequest());
+            var result = await this.identityService.SignInAsync(request.AsRequest());
             return this.CreateResponse(result.AsSignInWebResponse());
         }
 
         [HttpPost("sign-up")]
         public async Task<IActionResult> SignUpAsync([FromBody] SignUpWebRequest request)
         {
-            var result = await identityService.SignUpAsync(request.AsRequest(Role.Employer));
+            var result = await this.identityService.SignUpAsync(request.AsRequest(Role.Employer));
             return this.CreateResponse(result.AsSignUpWebResponse());
         }
     }

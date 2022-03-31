@@ -19,6 +19,12 @@
         public DateTime CreatedAt { get; set; }
 
         [DataMember]
+        public Guid CreatedBy { get; set; }
+
+        [DataMember]
         public DateTime? UpdatedAt { get; set; }
+
+        [DataMember]
+        public Guid UpdatedBy { get; set; }
     }
 }

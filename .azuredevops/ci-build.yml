@@ -4,9 +4,7 @@
 # in your CD (release), pick projects to be deployed to intended Azure Resources
 
 trigger:
-- dev
-- staging
-- master
+- none
 
 pool:
   vmImage: 'windows-2022'
@@ -15,6 +13,22 @@ variables:
   buildConfiguration: 'Release'
 
 steps:
+- task: richardfennellBM.BM-VSTS-StyleCop-Task.Stylecop-Runner.StyleCop@3
+  displayName: Yousource.Infrastructure
+  inputs:
+    sourcefolder: '$(build.SourcesDirectory)/Yousource.Infrastructure'
+    settingsFile: '$(build.SourcesDirectory)/Yousource.Infrastructure/Settings.StyleCop'
+- task: richardfennellBM.BM-VSTS-StyleCop-Task.Stylecop-Runner.StyleCop@3
+  displayName: Yousource.Services.Identity
+  inputs:
+    sourcefolder: '$(build.SourcesDirectory)/Yousource.Services.Identity'
+    settingsFile: '$(build.SourcesDirectory)/Yousource.Services.Identity/Settings.StyleCop'
+- task: DotNetCoreCLI@2
+  displayName: Test
+  inputs:
+    command: test
+    projects: $(BuildParameters.TestProjects)
+    arguments: --configuration $(BuildConfiguration) --collect "Code Coverage" --settings SolutionItems/CodeCoverage.runSettings
 - task: DotNetCoreCLI@2
   inputs:
     command: 'publish'
@@ -29,3 +43,5 @@ steps:
     ArtifactName: 'drop'
     publishLocation: 'Container'
   displayName: 'Publish Artifacts'
+
+

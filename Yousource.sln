@@ -34,6 +34,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Yousource.TestHelpers", "Yo
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Yousource.Api", "Yousource.Api\Yousource.Api.csproj", "{FCF3CFDB-F8BC-4908-94B4-5430712F4BA9}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".azuredevops", ".azuredevops", "{8DAC63FD-5267-4795-911C-42468F6FC30A}"
+	ProjectSection(SolutionItems) = preProject
+		.azuredevops\ci-build.yml = .azuredevops\ci-build.yml
+		.azuredevops\ci-gated.yml = .azuredevops\ci-gated.yml
+		.azuredevops\pull_request_template.md = .azuredevops\pull_request_template.md
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -89,6 +96,7 @@ Global
 		{7ED99B00-9ED3-4C1B-B939-EF719432F39D} = {ED6649DB-F9BF-4DF4-8FF0-76224CFE83C8}
 		{CBC3C261-1827-40F0-B60E-BB98D6452B18} = {C9DA8B8F-D40D-4342-8D7F-24A6F5D19BC8}
 		{FCF3CFDB-F8BC-4908-94B4-5430712F4BA9} = {05C52B8F-0E0E-4CF3-B8CA-13D56912C5A0}
+		{8DAC63FD-5267-4795-911C-42468F6FC30A} = {57303CBC-C6FF-462E-8E40-D1E25FC219D0}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {364D2E6D-FB1F-4B01-A310-396D6FF990D0}

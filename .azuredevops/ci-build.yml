@@ -23,6 +23,11 @@ steps:
   inputs:
     sourcefolder: '$(build.SourcesDirectory)/Yousource.Services.Identity'
     settingsFile: '$(build.SourcesDirectory)/Yousource.Services.Identity/Settings.StyleCop'
+- task: richardfennellBM.BM-VSTS-StyleCop-Task.Stylecop-Runner.StyleCop@3
+  displayName: Yousource.Services.Customer
+  inputs:
+    sourcefolder: '$(build.SourcesDirectory)/Yousource.Services.Customer'
+    settingsFile: '$(build.SourcesDirectory)/Yousource.Services.Customer/Settings.StyleCop'
 - task: DotNetCoreCLI@2
   displayName: Test
   inputs:
@@ -33,7 +38,7 @@ steps:
   inputs:
     command: 'publish'
     publishWebProjects: false
-    projects: '**/*.Yousource/*.Yousource.Api.csproj'
+    projects: '**/*/*.Api.csproj'
     arguments: '--configuration $(BuildConfiguration) --output $(build.artifactstagingdirectory)'
   displayName: 'Publish Yousource API'
 

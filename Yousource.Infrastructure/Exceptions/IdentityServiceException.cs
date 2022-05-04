@@ -2,10 +2,10 @@
 {
     using System;
 
-    public class IdentityServiceException : Exception
+    public class IdentityServiceException : RethrowableException
     {
         public IdentityServiceException(Exception ex)
-            : base(ex.Message, ex)
+            : base(ex, ex.Message)
         {
         }
     }

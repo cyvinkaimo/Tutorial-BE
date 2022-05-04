@@ -1,19 +1,19 @@
 ﻿namespace Yousource.Services.Customer.Data
 {
     using System.Collections.Generic;
-    using System.Data.Common;
     using System.Threading.Tasks;
+    using Yousource.ExceptionHandling;
     using Yousource.Infrastructure.Data.Interfaces;
     using Yousource.Infrastructure.Entities.Customers;
+    using Yousource.Infrastructure.Exceptions;
     using Yousource.Infrastructure.Helpers;
     using Yousource.Infrastructure.Logging;
-    using Yousource.Services.Customer.Exceptions;
+    using Yousource.Infrastructure.Services.Interfaces;
 
     //// Data access class
-    public class CustomerSqlDataGateway : ICustomerDataGateway
+    public class CustomerSqlDataGateway : ICustomerDataGateway, IExceptionHandleable
     {
         private readonly ISqlHelper sql;
-        private readonly ILogger logger;
 
         //// Inject necessary data access adapter like `ISqlHelper` and `ILogger`
         //// Inject command factory; Separates the creation of commands with parameters to be executed
@@ -22,41 +22,29 @@
             ILogger logger)
         {
             this.sql = helper;
-            this.logger = logger;
+            this.Logger = logger;
         }
 
+        public ILogger Logger { get; private set; }
+
+        //// Attribute that catches and wraps exceptions as data exceptions then rethrows them
+        [HandleDataException(typeof(CustomerDataException))]
         public async Task<IEnumerable<Customer>> GetCustomersAsync()
         {
             var result = new List<Customer>();
 
-            try
-            {
-                var command = CustomerSqlCommandFactory.CreateGetCustomersCommand();
-                result = await this.sql.ReadAsListAsync<Customer>(command);
-            }
-            catch (DbException ex)
-            {
-                //// Log, Wrap and Rethrow data-related exceptions
-                this.logger.WriteException(ex);
-                throw new CustomerDataException(ex);
-            }
+            var command = CustomerSqlCommandFactory.CreateGetCustomersCommand();
+            result = await this.sql.ReadAsListAsync<Customer>(command);
 
             return result;
         }
 
+        //// Attribute that catches and wraps exceptions as data-related exceptions then rethrows them
+        [HandleDataException(typeof(CustomerDataException))]
         public async Task InsertCustomerAsync(Customer customer)
         {
-            try
-            {
-                var command = CustomerSqlCommandFactory.CreateInsertCustomerCommand(customer);
-                await this.sql.ExecuteAsync(command);
-            }
-            catch (DbException ex)
-            {
-                //// Log, Wrap and Rethrow data-related exceptions
-                this.logger.WriteException(ex);
-                throw new CustomerDataException(ex);
-            }
+            var command = CustomerSqlCommandFactory.CreateInsertCustomerCommand(customer);
+            await this.sql.ExecuteAsync(command);
         }
     }
 }

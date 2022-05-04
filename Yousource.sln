@@ -41,6 +41,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".azuredevops", ".azuredevop
 		.azuredevops\pull_request_template.md = .azuredevops\pull_request_template.md
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Yousource.ExceptionHandling", "Yousource.ExceptionHandling\Yousource.ExceptionHandling.csproj", "{674FC1FC-DD6E-4652-A60B-CB0FD5EDD215}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -81,6 +83,10 @@ Global
 		{FCF3CFDB-F8BC-4908-94B4-5430712F4BA9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FCF3CFDB-F8BC-4908-94B4-5430712F4BA9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FCF3CFDB-F8BC-4908-94B4-5430712F4BA9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{674FC1FC-DD6E-4652-A60B-CB0FD5EDD215}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{674FC1FC-DD6E-4652-A60B-CB0FD5EDD215}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{674FC1FC-DD6E-4652-A60B-CB0FD5EDD215}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{674FC1FC-DD6E-4652-A60B-CB0FD5EDD215}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -97,6 +103,7 @@ Global
 		{CBC3C261-1827-40F0-B60E-BB98D6452B18} = {C9DA8B8F-D40D-4342-8D7F-24A6F5D19BC8}
 		{FCF3CFDB-F8BC-4908-94B4-5430712F4BA9} = {05C52B8F-0E0E-4CF3-B8CA-13D56912C5A0}
 		{8DAC63FD-5267-4795-911C-42468F6FC30A} = {57303CBC-C6FF-462E-8E40-D1E25FC219D0}
+		{674FC1FC-DD6E-4652-A60B-CB0FD5EDD215} = {C9DA8B8F-D40D-4342-8D7F-24A6F5D19BC8}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {364D2E6D-FB1F-4B01-A310-396D6FF990D0}

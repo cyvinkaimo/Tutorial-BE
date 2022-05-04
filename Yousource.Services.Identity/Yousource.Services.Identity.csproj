@@ -10,9 +10,11 @@
     <PackageReference Include="Microsoft.AspNetCore.Identity" Version="2.2.0" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="5.0.5" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="5.0.5" />
+    <PackageReference Include="MrAdvice" Version="2.9.7" />
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Yousource.ExceptionHandling\Yousource.ExceptionHandling.csproj" />
     <ProjectReference Include="..\Yousource.Infrastructure\Yousource.Infrastructure.csproj" />
   </ItemGroup>
 

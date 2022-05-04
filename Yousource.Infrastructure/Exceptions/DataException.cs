@@ -2,10 +2,10 @@
 {
     using System;
 
-    public class DataException : Exception
+    public class DataException : RethrowableException
     {
         public DataException(Exception ex, string message = "")
-                  : base(message ?? ex.Message, ex)
+                  : base(ex, message ?? ex.Message)
         {
         }
     }

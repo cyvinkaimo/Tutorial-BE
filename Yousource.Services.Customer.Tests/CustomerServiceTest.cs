@@ -8,8 +8,8 @@ namespace Yousource.Services.Customer.Tests
     using Moq;
     using Yousource.Infrastructure.Data.Interfaces;
     using Yousource.Infrastructure.Entities.Customers;
+    using Yousource.Infrastructure.Exceptions;
     using Yousource.Infrastructure.Logging;
-    using Yousource.Services.Customer.Exceptions;
 
     [TestClass]
     public class CustomerServiceTest

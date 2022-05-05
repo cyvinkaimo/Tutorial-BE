@@ -11,7 +11,8 @@
     [Route("api/login")]
     [TypeFilter(typeof(LogExceptionAttribute))]
     [TypeFilter(typeof(ValidateModelStateAttribute))]
-    [AllowAnonymous]
+    [AllowAnonymous] //// NOTE that your other controllers must not have this attribute. The Login page is meant to be public
+    //// [Authorize] Use the authorize attribute for other controllers to validate JWT/access token
     public class LoginController : ControllerBase
     {
         private readonly IIdentityService identityService;

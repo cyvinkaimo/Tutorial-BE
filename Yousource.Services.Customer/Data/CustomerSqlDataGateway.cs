@@ -28,7 +28,7 @@
         public ILogger Logger { get; private set; }
 
         //// Attribute that catches and wraps exceptions as data exceptions then rethrows them
-        [HandleDataException(typeof(CustomerDataException))]
+        [HandleDataException(typeof(DataException))]
         public async Task<IEnumerable<Customer>> GetCustomersAsync()
         {
             var result = new List<Customer>();
@@ -40,7 +40,7 @@
         }
 
         //// Attribute that catches and wraps exceptions as data-related exceptions then rethrows them
-        [HandleDataException(typeof(CustomerDataException))]
+        [HandleDataException(typeof(DataException))]
         public async Task InsertCustomerAsync(Customer customer)
         {
             var command = CustomerSqlCommandFactory.CreateInsertCustomerCommand(customer);

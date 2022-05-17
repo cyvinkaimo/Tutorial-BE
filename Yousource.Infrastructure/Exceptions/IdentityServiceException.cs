@@ -5,7 +5,7 @@
     public class IdentityServiceException : RethrowableException
     {
         public IdentityServiceException(Exception ex, string message = "")
-            : base(ex, message)
+            : base(ex, message ?? ex.Message)
         {
         }
     }

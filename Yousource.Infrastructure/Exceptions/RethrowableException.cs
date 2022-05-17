@@ -4,7 +4,7 @@
 
     public abstract class RethrowableException : Exception
     {
-        public RethrowableException(Exception inner, string message = "")
+        public RethrowableException(Exception inner, string message)
             : base(message, inner)
         {
         }

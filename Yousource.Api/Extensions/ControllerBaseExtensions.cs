@@ -11,7 +11,16 @@
         public static IActionResult CreateResponse<T>(this ControllerBase controller, T value) where T : WebResponse
         {
             var result = default(IActionResult);
-            result = controller.StatusCode((int)value.StatusCodeMap[value.ErrorCode], value);
+            dynamic response = new { errorCode = value.ErrorCode, message = value.Message };
+
+            var responseWithData = value as WebResponse<object>;
+
+            if (responseWithData != null)
+            {
+                response.data = responseWithData.Data;
+            }
+
+            result = controller.StatusCode((int)value.StatusCodeMap[value.ErrorCode], response);
             return result;
         }
 

@@ -36,7 +36,7 @@
         [JsonProperty("errorCode", NullValueHandling = NullValueHandling.Ignore)]
         public string ErrorCode { get; set; } = string.Empty;
 
-        [JsonIgnore]
+        [System.Text.Json.Serialization.JsonIgnore]
         public virtual Dictionary<string, HttpStatusCode> StatusCodeMap => new Dictionary<string, HttpStatusCode>
         {
             { string.Empty, HttpStatusCode.OK },

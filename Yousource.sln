@@ -41,7 +41,17 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".azuredevops", ".azuredevop
 		.azuredevops\pull_request_template.md = .azuredevops\pull_request_template.md
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Yousource.ExceptionHandling", "Yousource.ExceptionHandling\Yousource.ExceptionHandling.csproj", "{674FC1FC-DD6E-4652-A60B-CB0FD5EDD215}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Yousource.ExceptionHandling", "Yousource.ExceptionHandling\Yousource.ExceptionHandling.csproj", "{674FC1FC-DD6E-4652-A60B-CB0FD5EDD215}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Functions", "Functions", "{0234E91B-D248-4713-B733-885D1A77774C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tutorial.TryFunction", "Tutorial.TryFunction\Tutorial.TryFunction.csproj", "{99C56DB0-B8B2-4966-8EB8-C408812CB1FD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Yousource.TurorialApi", "Yousource.TurorialApi\Yousource.TurorialApi.csproj", "{F8F36668-00BA-45F9-9E26-1528ADE0951B}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tutorial", "Tutorial", "{A2DAB3A7-C6E2-4AEA-B8E5-B1FB2B7EE122}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Yousource.Services.Tutorial", "Yousource.Services.Tutorial\Yousource.Services.Tutorial.csproj", "{AAF04F67-C7A0-48A2-8427-29551EAD163C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -87,6 +97,18 @@ Global
 		{674FC1FC-DD6E-4652-A60B-CB0FD5EDD215}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{674FC1FC-DD6E-4652-A60B-CB0FD5EDD215}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{674FC1FC-DD6E-4652-A60B-CB0FD5EDD215}.Release|Any CPU.Build.0 = Release|Any CPU
+		{99C56DB0-B8B2-4966-8EB8-C408812CB1FD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{99C56DB0-B8B2-4966-8EB8-C408812CB1FD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{99C56DB0-B8B2-4966-8EB8-C408812CB1FD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{99C56DB0-B8B2-4966-8EB8-C408812CB1FD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F8F36668-00BA-45F9-9E26-1528ADE0951B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F8F36668-00BA-45F9-9E26-1528ADE0951B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F8F36668-00BA-45F9-9E26-1528ADE0951B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F8F36668-00BA-45F9-9E26-1528ADE0951B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AAF04F67-C7A0-48A2-8427-29551EAD163C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AAF04F67-C7A0-48A2-8427-29551EAD163C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AAF04F67-C7A0-48A2-8427-29551EAD163C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AAF04F67-C7A0-48A2-8427-29551EAD163C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -104,6 +126,10 @@ Global
 		{FCF3CFDB-F8BC-4908-94B4-5430712F4BA9} = {05C52B8F-0E0E-4CF3-B8CA-13D56912C5A0}
 		{8DAC63FD-5267-4795-911C-42468F6FC30A} = {57303CBC-C6FF-462E-8E40-D1E25FC219D0}
 		{674FC1FC-DD6E-4652-A60B-CB0FD5EDD215} = {C9DA8B8F-D40D-4342-8D7F-24A6F5D19BC8}
+		{99C56DB0-B8B2-4966-8EB8-C408812CB1FD} = {0234E91B-D248-4713-B733-885D1A77774C}
+		{F8F36668-00BA-45F9-9E26-1528ADE0951B} = {05C52B8F-0E0E-4CF3-B8CA-13D56912C5A0}
+		{A2DAB3A7-C6E2-4AEA-B8E5-B1FB2B7EE122} = {7331555E-5BD7-4758-AEF9-619E0787EB53}
+		{AAF04F67-C7A0-48A2-8427-29551EAD163C} = {A2DAB3A7-C6E2-4AEA-B8E5-B1FB2B7EE122}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {364D2E6D-FB1F-4B01-A310-396D6FF990D0}

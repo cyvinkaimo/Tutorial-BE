@@ -63,18 +63,10 @@
     <Folder Include="Functions" />
     <Folder Include="Scripts" />
     <Folder Include="Scripts\PostDeployment" />
-    <Folder Include="Tables\Identity" />
   </ItemGroup>
   <ItemGroup>
-    <Build Include="StoredProcedures\sp_InsertCustomer.sql" />
-    <Build Include="Tables\Customers.sql" />
-    <Build Include="StoredProcedures\sp_GetCustomers.sql" />
-    <Build Include="Tables\Identity\RoleClaims.sql" />
-    <Build Include="Tables\Identity\UserClaims.sql" />
-    <Build Include="Tables\Identity\Roles.sql" />
-    <Build Include="Tables\Identity\UserLogins.sql" />
-    <Build Include="Tables\Identity\UserRoles.sql" />
-    <Build Include="Tables\Identity\Users.sql" />
-    <Build Include="Tables\Identity\UserTokens.sql" />
+    <Build Include="StoredProcedures\sp_InsertEmployee.sql" />
+    <Build Include="Tables\Employees.sql" />
+    <Build Include="StoredProcedures\sp_GetEmployees.sql" />
   </ItemGroup>
 </Project>

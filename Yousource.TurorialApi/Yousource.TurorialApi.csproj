@@ -8,16 +8,16 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.20.0" />
-    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="6.0.1" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Yousource.Services.Identity\Yousource.Services.Identity.csproj" />
+    <Folder Include="Models\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Yousource.Infrastructure\Yousource.Infrastructure.csproj" />
     <ProjectReference Include="..\Yousource.Services.Tutorial\Yousource.Services.Tutorial.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Messages\" />
   </ItemGroup>
 
 </Project>

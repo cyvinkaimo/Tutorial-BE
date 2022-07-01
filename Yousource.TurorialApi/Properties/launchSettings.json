@@ -1,0 +1,32 @@
+﻿{
+  "$schema": "https://json.schemastore.org/launchsettings.json",
+  "iisSettings": {
+    "windowsAuthentication": false,
+    "anonymousAuthentication": true,
+    "iisExpress": {
+      "applicationUrl": "http://localhost:49652",
+      "sslPort": 44374
+    }
+  },
+  "profiles": {
+    "Yousource.TurorialApi": {
+        "commandName": "Project",
+        "launchUrl": "weatherforecast",
+        "environmentVariables": {
+          "ASPNETCORE_ENVIRONMENT": "Development"
+        },
+        "hotReloadEnabled": false,
+        "applicationUrl": "http://localhost:5678",
+        "dotnetRunMessages": true
+      }
+    },
+    "IIS Express": {
+      "commandName": "IISExpress",
+      "launchBrowser": true,
+      "launchUrl": "swagger",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      }
+    }
+  }
+}
